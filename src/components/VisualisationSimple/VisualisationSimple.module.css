@@ -41,7 +41,7 @@
   left: 0;
   position: absolute;
   right: 0;
-  stroke-width: 4;
+  stroke-width: 6;
   top: 0;
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
@@ -55,10 +55,18 @@
   left: 0;
   position: absolute;
   right: 0;
-  stroke-width: 4;
+  stroke-width: 6;
   top: 0;
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
-  transition: 0.05s stroke-dashoffset;
   z-index: 5;
+}
+
+.fadeOut {
+  opacity: 0;
+  transition: 0.35s opacity;
+}
+.fadeIn {
+  opacity: 1;
+  transition: 0.2s opacity;
 }

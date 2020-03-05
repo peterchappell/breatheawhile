@@ -21,7 +21,7 @@ const VisualisationSimple = (props) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.phase}>
+      <div className={`${styles.phase} ${progress >= 0.9 ? styles.fadeOut : styles.fadeIn}`}>
         <InVisual className={styles.phaseVisual} style={{display: currentPhase === 'in' ? 'block' : 'none'}} />
         <OutVisual className={styles.phaseVisual} style={{display: currentPhase === 'out' ? 'block' : 'none'}} />
         <PauseVisual className={styles.phaseVisual} style={{display: currentPhase === 'pause' ? 'block' : 'none'}} />
@@ -32,7 +32,7 @@ const VisualisationSimple = (props) => {
           cx="140"
           cy="140"
           r={radius}
-          stroke={currentPhase === 'pause' ? '#59B9EC' : '#333'}
+          stroke={currentPhase === 'pause' ? '#236385' : '#333'}
         />
         <circle
           className={styles.progress}
@@ -41,10 +41,10 @@ const VisualisationSimple = (props) => {
           r={radius}
           strokeDasharray={`${circumference} ${circumference}`}
           strokeDashoffset={circumference - progress * circumference}
-          stroke={currentPhase === 'pause' ? '#333' : '#59B9EC'}
+          stroke={currentPhase === 'pause' ? '#333' : '#236385'}
         />
       </svg>
-      <div className={styles.phaseInstruction}>{stringLookup[currentPhase]}</div>
+      <div className={`${styles.phaseInstruction} ${progress >= 0.9 ? styles.fadeOut : styles.fadeIn}`}>{stringLookup[currentPhase]}</div>
     </div>
   );
 }
