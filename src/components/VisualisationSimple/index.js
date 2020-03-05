@@ -8,7 +8,7 @@ const VisualisationSimple = (props) => {
     progress,
   } = props;
 
-  const radius = 100;
+  const radius = 130;
   const circumference = radius * 2 * Math.PI;
 
   return (
@@ -19,15 +19,15 @@ const VisualisationSimple = (props) => {
       <svg className={styles.circle}>
         <circle
           className={styles.background}
-          cx="120"
-          cy="120"
+          cx={radius + 5}
+          cy={radius + 5}
           r={radius}
           stroke={currentPhase === 'pause' ? 'green' : '#333'}
         />
         <circle
           className={styles.progress}
-          cx="120"
-          cy="120"
+          cx={radius + 5}
+          cy={radius + 5}
           r={radius}
           strokeDasharray={`${circumference} ${circumference}`}
           strokeDashoffset={circumference - progress * circumference}

@@ -7,9 +7,10 @@ const App = () => {
   const [timeAccumulator, setTimeAccumulator] = useState(0);
   const [phaseProgress, setPhaseProgress] = useState(0);
   const [phaseIndex, setPhaseIndex] = useState(0);
+  const [timeUnitInSeconds, setTimeUnitInSeconds] = useState(1);
+  
+  const tickTimeInSeconds = 0.05;
 
-  const timeUnitInSeconds = 1;
-  const timerGranularity = 20;
   const phasePattern = [
     {
       name: 'in',
@@ -29,13 +30,17 @@ const App = () => {
     },
   ];
 
+  const changeTimeUnit = (event) => {
+    setTimeUnitInSeconds(event.target.value);
+  };
+
   useEffect(() => {
     let interval = null;
 
-    if (timeAccumulator <= phasePattern[phaseIndex].units + 1) {
+    if (timeAccumulator <= phasePattern[phaseIndex].units * timeUnitInSeconds) {
       interval = setInterval(() => {
-        setTimeAccumulator(timeAccumulator => timeAccumulator + timeUnitInSeconds/timerGranularity);
-      }, timeUnitInSeconds/timerGranularity * 1000);
+        setTimeAccumulator(timeAccumulator => timeAccumulator + tickTimeInSeconds);
+      }, tickTimeInSeconds * 1000);
     } else {
       clearInterval(interval);
       setTimeAccumulator(0);
@@ -46,10 +51,10 @@ const App = () => {
       }
     }
 
-    setPhaseProgress(timeAccumulator/(phasePattern[phaseIndex].units + 1) * 100);
+    setPhaseProgress(timeAccumulator/(phasePattern[phaseIndex].units * timeUnitInSeconds) * 100);
 
     return () => clearInterval(interval);
-  }, [phaseIndex, timeAccumulator, phasePattern]);
+  }, [phaseIndex, timeAccumulator, phasePattern, timeUnitInSeconds, tickTimeInSeconds]);
 
   return (
     <section className={styles.App}>
@@ -59,6 +64,9 @@ const App = () => {
       <main>
         <VisualisationSimple currentPhase={phasePattern[phaseIndex].name} progress={phaseProgress/100} />
       </main>
+      <footer className={styles.footer}>
+        <input type="range" min={0.5} max={1.5} step={0.05} defaultValue={timeUnitInSeconds} onChange={changeTimeUnit} className={styles.speedControl} />
+      </footer>
     </section>
   );
 };
