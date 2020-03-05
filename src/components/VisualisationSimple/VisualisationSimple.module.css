@@ -1,0 +1,50 @@
+.container {
+  position: relative;
+}
+
+.phase {
+  display: flex;
+  align-items: center;
+  font-size: 60px;
+  height: 240px;
+  justify-content: center;
+  left: 0;
+  line-height: 60px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+}
+
+.circle {
+  width: 240px;
+  height: 240px;
+  position: relative;
+}
+
+.progress {
+  bottom: 0;
+  fill: none;
+  left: 0;
+  position: absolute;
+  right: 0;
+  stroke-width: 4;
+  top: 0;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: 0.25s stroke;
+  z-index: 10;
+}
+
+.background {
+  bottom: 0;
+  fill: none;
+  left: 0;
+  position: absolute;
+  right: 0;
+  stroke-width: 4;
+  top: 0;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: 0.05s stroke-dashoffset;
+  z-index: 5;
+}
