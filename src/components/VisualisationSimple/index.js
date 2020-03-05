@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './VisualisationSimple.module.css';
+import { ReactComponent as InVisual } from './in.svg';
+import { ReactComponent as OutVisual } from './out.svg';
+import { ReactComponent as PauseVisual } from './pause.svg';
 
 const VisualisationSimple = (props) => {
   const {
@@ -10,30 +13,38 @@ const VisualisationSimple = (props) => {
 
   const radius = 130;
   const circumference = radius * 2 * Math.PI;
+  const stringLookup = {
+    in: 'Breathe in',
+    out: 'Breathe out',
+    pause: 'Hold',
+  }
 
   return (
     <div className={styles.container}>
       <div className={styles.phase}>
-        {currentPhase}
+        <InVisual className={styles.phaseVisual} style={{display: currentPhase === 'in' ? 'block' : 'none'}} />
+        <OutVisual className={styles.phaseVisual} style={{display: currentPhase === 'out' ? 'block' : 'none'}} />
+        <PauseVisual className={styles.phaseVisual} style={{display: currentPhase === 'pause' ? 'block' : 'none'}} />
       </div>
       <svg className={styles.circle}>
         <circle
           className={styles.background}
-          cx={radius + 5}
-          cy={radius + 5}
+          cx="140"
+          cy="140"
           r={radius}
-          stroke={currentPhase === 'pause' ? 'green' : '#333'}
+          stroke={currentPhase === 'pause' ? '#59B9EC' : '#333'}
         />
         <circle
           className={styles.progress}
-          cx={radius + 5}
-          cy={radius + 5}
+          cx="140"
+          cy="140"
           r={radius}
           strokeDasharray={`${circumference} ${circumference}`}
           strokeDashoffset={circumference - progress * circumference}
-          stroke={currentPhase === 'pause' ? '#333' : 'green'}
+          stroke={currentPhase === 'pause' ? '#333' : '#59B9EC'}
         />
       </svg>
+      <div className={styles.phaseInstruction}>{stringLookup[currentPhase]}</div>
     </div>
   );
 }
