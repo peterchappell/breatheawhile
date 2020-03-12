@@ -1,73 +1,81 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import {
+  HashRouter as Router,
+  Switch,
+  Route,
+  Link,
+  NavLink,
+} from 'react-router-dom';
 import styles from './App.module.css';
-import VisualisationSimple from 'components/VisualisationSimple';
+import { ReactComponent as SettingsIcon } from './settings.svg';
+import Main from 'components/Main';
 
 const App = () => {
+  const [buzzOnSecond, setBuzzOnSecond] = useState(false);
+  const [beepOnSecond, setBeepOnSecond] = useState(false);
+  const [buzzOnChange, setBuzzOnChange] = useState(false);
+  const [beepOnChange, setBeepOnChange] = useState(false);
 
-  const [timeAccumulator, setTimeAccumulator] = useState(0);
-  const [phaseProgress, setPhaseProgress] = useState(0);
-  const [phaseIndex, setPhaseIndex] = useState(0);
-  const [timeUnitInSeconds, setTimeUnitInSeconds] = useState(1);
-  
-  const tickTimeInSeconds = 0.05;
-
-  const phasePattern = [
-    {
-      name: 'in',
-      units: 4,
-    },
-    {
-      name: 'pause',
-      units: 4,
-    },
-    {
-      name: 'out',
-      units: 4,
-    },
-    {
-      name: 'pause',
-      units: 4,
-    },
-  ];
-
-  const changeTimeUnit = (event) => {
-    setTimeUnitInSeconds(event.target.value);
+  const toggleBuzzOnSecond = () => {
+    setBuzzOnSecond(!buzzOnSecond);
   };
 
-  useEffect(() => {
-    let interval = null;
+  const toggleBeepOnSecond = () => {
+    setBeepOnSecond(!beepOnSecond);
+  };
 
-    if (timeAccumulator <= phasePattern[phaseIndex].units * timeUnitInSeconds) {
-      interval = setInterval(() => {
-        setTimeAccumulator(timeAccumulator => timeAccumulator + tickTimeInSeconds);
-      }, tickTimeInSeconds * 1000);
-    } else {
-      clearInterval(interval);
-      setTimeAccumulator(0);
-      if (phaseIndex < phasePattern.length - 1) {
-        setPhaseIndex(phaseIndex + 1);
-      } else {
-        setPhaseIndex(0);
-      }
-    }
+  const toggleBuzzOnChange = () => {
+    setBuzzOnChange(!buzzOnChange);
+  };
 
-    setPhaseProgress(timeAccumulator/(phasePattern[phaseIndex].units * timeUnitInSeconds) * 100);
-
-    return () => clearInterval(interval);
-  }, [phaseIndex, timeAccumulator, phasePattern, timeUnitInSeconds, tickTimeInSeconds]);
+  const toggleBeepOnChange = () => {
+    setBeepOnChange(!beepOnChange);
+  };
 
   return (
-    <section className={styles.App}>
-      <header className={styles.header}>
-        Breathonome
-      </header>
-      <main>
-        <VisualisationSimple currentPhase={phasePattern[phaseIndex].name} progress={phaseProgress/100} />
-      </main>
-      <footer className={styles.footer}>
-        <input type="range" min={0.5} max={1.5} step={0.05} defaultValue={timeUnitInSeconds} onChange={changeTimeUnit} className={styles.speedControl} />
-      </footer>
-    </section>
+    <Router>
+      <section className={styles.App}>
+        <header className={styles.header}>
+          <h1 className={styles.headerTitle}>
+            <Link to="/" className={styles.headerTitleLink}>
+              Breathonome
+            </Link>
+          </h1>
+          <NavLink to="/settings" className={styles.settingsLink} activeStyle={{color: 'white'}}>
+            <SettingsIcon className={styles.settingsIcon} />
+          </NavLink>
+        </header>
+        <Switch>
+          <Route path="/settings">
+            <h2 className={styles.settingsSubheading}>Vibrations</h2>
+            <p className={styles.settingsHelp}>(Only applies to devices that can vibrate).</p>
+            <div className={styles.checkboxItem}>
+              <input className={styles.checkbox} type="checkbox" checked={buzzOnSecond} id="buzz_on_second" onChange={toggleBuzzOnSecond} />
+              <label htmlFor="buzz_on_second">Vibrate on every count</label>
+            </div>
+            <div className={styles.checkboxItem}>
+              <input className={styles.checkbox} type="checkbox" checked={buzzOnChange} id="buzz_on_change" onChange={toggleBuzzOnChange} />
+              <label htmlFor="buzz_on_change">Vibrate (more) when the breath changes</label>
+            </div>
+            <h2 className={styles.settingsSubheading}>Sound</h2>
+            <div className={styles.checkboxItem}>
+              <input className={styles.checkbox} type="checkbox" checked={beepOnSecond} id="beep_on_second" onChange={toggleBeepOnSecond} />
+              <label htmlFor="beep_on_second">Beep on every count</label>
+            </div>
+            <div className={styles.checkboxItem}>
+              <input className={styles.checkbox} type="checkbox" checked={beepOnChange} id="beep_on_change" onChange={toggleBeepOnChange} />
+              <label htmlFor="beep_on_change">Beep (louder) when the breath changes</label>
+            </div>
+            <Link to="/" className={styles.settingsApplyButton}>
+              OK
+            </Link>
+          </Route>
+          <Route path="*">
+            <Main buzzOnSecond={buzzOnSecond} beepOnSecond={beepOnSecond} buzzOnChange={buzzOnChange} beepOnChange={beepOnChange} />
+          </Route>
+        </Switch>
+      </section>
+    </Router>
   );
 };
 

@@ -2,111 +2,76 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: space-between;
   text-align: center;
 }
 
 .header {
+  align-items: center;
   background-color: #111;
   border-bottom: 1px solid #000;
-  color: white;
-  font-size: 18px;
+  display: flex;
   font-weight: bold;
+  justify-content: space-between;
   padding: 20px;
   text-align: left;
 }
 
-.footer {
-  padding: 20px;
+.headerTitle {
+  color: white;
+  font-size: 18px;
+  margin: 0;
 }
 
-/* TODO: Use a component for this */
-.speedControl {
-  direction: rtl;
-  margin: 18px 0;
+.headerTitleLink:link, .headerTitleLink:visited, .headerTitleLink:active, .headerTitleLink:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.settingsIcon {
+  display: block;
+  height: 30px;
+  width: 30px;
+}
+
+.settingsLink, .settingsLink:visited, .settingsLink:hover {
+  color: #ccc;
+  display: block;
+}
+
+.settingsSubheading {
+  font-size: 24px;
+  margin: 30px 0 20px;
+  padding: 0 20px;
+  text-align: left;
+}
+
+.settingsHelp {
+  margin: 0 20px 20px;
+  text-align: left;
+}
+
+.checkboxItem {
+  align-items: center;
+  display: flex;
+  margin: 0 auto;
+  max-width: 500px;
+  padding: 15px 20px;
   width: 100%;
-  -webkit-appearance: none;
 }
-.speedControl:focus {
-  outline: none;
+
+.checkbox {
+  height: 24px;
+  margin-right: 10px;
+  width: 24px;
 }
-.speedControl::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 8.4px;
-  cursor: pointer;
-  animate: 0.2s;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #666;
-  border-radius: 1.3px;
-  border: 0.2px solid #010101;
-}
-.speedControl::-webkit-slider-thumb {
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  border: 1px solid #000000;
-  height: 36px;
-  width: 16px;
-  border-radius: 3px;
-  background: #ccc;
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: -14px;
-}
-.speedControl:focus::-webkit-slider-runnable-track {
-  background: #367ebd;
-}
-.speedControl::-moz-range-track {
-  width: 100%;
-  height: 8.4px;
-  cursor: pointer;
-  animate: 0.2s;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #666;
-  border-radius: 1.3px;
-  border: 0.2px solid #010101;
-}
-.speedControl::-moz-range-thumb {
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  border: 1px solid #000000;
-  height: 36px;
-  width: 16px;
-  border-radius: 3px;
-  background: #ccc;
-  cursor: pointer;
-}
-.speedControl::-ms-track {
-  width: 100%;
-  height: 8.4px;
-  cursor: pointer;
-  animate: 0.2s;
-  background: transparent;
-  border-color: transparent;
-  border-width: 16px 0;
-  color: transparent;
-}
-.speedControl::-ms-fill-lower {
-  background: #666;
-  border: 0.2px solid #010101;
-  border-radius: 2.6px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-}
-.speedControl::-ms-fill-upper {
-  background: #666;
-  border: 0.2px solid #010101;
-  border-radius: 2.6px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-}
-.speedControl::-ms-thumb {
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  border: 1px solid #000000;
-  height: 36px;
-  width: 16px;
-  border-radius: 3px;
-  background: #ccc;
-  cursor: pointer;
-}
-.speedControl:focus::-ms-fill-lower {
-  background: #666;
-}
-.speedControl:focus::-ms-fill-upper {
-  background: #666;
+
+.settingsApplyButton {
+  background-color: #ccc;
+  color: #111;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 40px auto 0;
+  width: 200px;
+  padding: 15px;
+  text-decoration: none;
 }

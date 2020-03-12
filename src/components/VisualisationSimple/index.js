@@ -13,11 +13,6 @@ const VisualisationSimple = (props) => {
 
   const radius = 130;
   const circumference = radius * 2 * Math.PI;
-  const stringLookup = {
-    in: 'Breathe in',
-    out: 'Breathe out',
-    pause: 'Hold',
-  }
 
   return (
     <div className={styles.container}>
@@ -44,7 +39,6 @@ const VisualisationSimple = (props) => {
           stroke={currentPhase === 'pause' ? '#333' : '#236385'}
         />
       </svg>
-      <div className={`${styles.phaseInstruction} ${progress >= 0.9 ? styles.fadeOut : styles.fadeIn}`}>{stringLookup[currentPhase]}</div>
     </div>
   );
 }
