@@ -47,28 +47,30 @@ const App = () => {
         </header>
         <Switch>
           <Route path="/settings">
-            <h2 className={styles.settingsSubheading}>Vibrations</h2>
-            <p className={styles.settingsHelp}>(Only applies to devices that can vibrate).</p>
-            <div className={styles.checkboxItem}>
-              <input className={styles.checkbox} type="checkbox" checked={buzzOnSecond} id="buzz_on_second" onChange={toggleBuzzOnSecond} />
-              <label htmlFor="buzz_on_second">Vibrate on every count</label>
+            <div className={styles.settingsContainer}>
+              <h2 className={styles.settingsSubheading}>Vibrations</h2>
+              <p className={styles.settingsHelp}>(Only applies to devices that can vibrate).</p>
+              <div className={styles.checkboxItem}>
+                <input className={styles.checkbox} type="checkbox" checked={buzzOnSecond} id="buzz_on_second" onChange={toggleBuzzOnSecond} />
+                <label htmlFor="buzz_on_second">Vibrate on every count</label>
+              </div>
+              <div className={styles.checkboxItem}>
+                <input className={styles.checkbox} type="checkbox" checked={buzzOnChange} id="buzz_on_change" onChange={toggleBuzzOnChange} />
+                <label htmlFor="buzz_on_change">Vibrate (more) when the breath changes</label>
+              </div>
+              <h2 className={styles.settingsSubheading}>Sound</h2>
+              <div className={styles.checkboxItem}>
+                <input className={styles.checkbox} type="checkbox" checked={beepOnSecond} id="beep_on_second" onChange={toggleBeepOnSecond} />
+                <label htmlFor="beep_on_second">Beep on every count</label>
+              </div>
+              <div className={styles.checkboxItem}>
+                <input className={styles.checkbox} type="checkbox" checked={beepOnChange} id="beep_on_change" onChange={toggleBeepOnChange} />
+                <label htmlFor="beep_on_change">Beep (louder) when the breath changes</label>
+              </div>
+              <Link to="/" className={styles.settingsApplyButton}>
+                OK
+              </Link>
             </div>
-            <div className={styles.checkboxItem}>
-              <input className={styles.checkbox} type="checkbox" checked={buzzOnChange} id="buzz_on_change" onChange={toggleBuzzOnChange} />
-              <label htmlFor="buzz_on_change">Vibrate (more) when the breath changes</label>
-            </div>
-            <h2 className={styles.settingsSubheading}>Sound</h2>
-            <div className={styles.checkboxItem}>
-              <input className={styles.checkbox} type="checkbox" checked={beepOnSecond} id="beep_on_second" onChange={toggleBeepOnSecond} />
-              <label htmlFor="beep_on_second">Beep on every count</label>
-            </div>
-            <div className={styles.checkboxItem}>
-              <input className={styles.checkbox} type="checkbox" checked={beepOnChange} id="beep_on_change" onChange={toggleBeepOnChange} />
-              <label htmlFor="beep_on_change">Beep (louder) when the breath changes</label>
-            </div>
-            <Link to="/" className={styles.settingsApplyButton}>
-              OK
-            </Link>
           </Route>
           <Route path="*">
             <Main buzzOnSecond={buzzOnSecond} beepOnSecond={beepOnSecond} buzzOnChange={buzzOnChange} beepOnChange={beepOnChange} />
