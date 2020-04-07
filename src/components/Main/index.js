@@ -14,12 +14,13 @@ const Main = (props) => {
     beepOnSecond,
     buzzOnChange,
     beepOnChange,
+    timeUnitInSeconds,
+    showInstructions,
   } = props;
 
   const [timeAccumulator, setTimeAccumulator] = useState(0);
   const [phaseProgress, setPhaseProgress] = useState(0);
   const [phaseIndex, setPhaseIndex] = useState(0);
-  const [timeUnitInSeconds, setTimeUnitInSeconds] = useState(1);
   const [currentCount, setCurrentCount] = useState(0);
   const tickDivider = useRef(0.02);
   const isVisible = usePageVisibility();
@@ -42,10 +43,6 @@ const Main = (props) => {
       units: 4,
     },
   ];
-
-  const changeTimeUnit = (event) => {
-    setTimeUnitInSeconds(event.target.value);
-  };
 
   const doBeep = (vol, freq, duration) => {
     const v = audioContext.createOscillator();
@@ -101,13 +98,10 @@ const Main = (props) => {
 
   return (
     <div className={styles.Main}>
-      <main className={styles.content}>
+      <div className={styles.content}>
         <VisualisationSimple currentPhase={phasePattern[phaseIndex].name} progress={phaseProgress/100} />
-        <BreathingTextPrompt currentPhase={phasePattern[phaseIndex].name} progress={phaseProgress/100} count={currentCount} />
-      </main>
-      <footer className={styles.footer}>
-        <input type="range" min={0.5} max={1.5} step={0.05} defaultValue={timeUnitInSeconds} onChange={changeTimeUnit} className={styles.speedControl} />
-      </footer>
+        { showInstructions && <BreathingTextPrompt currentPhase={phasePattern[phaseIndex].name} progress={phaseProgress/100} count={currentCount} /> }
+      </div>
     </div>
   );
 };
