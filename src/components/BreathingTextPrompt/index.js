@@ -4,20 +4,14 @@ import styles from './BreathingTextPrompt.module.css';
 
 const BreathingTextPrompt = (props) => {
   const {
-    currentPhase,
+    currentInstruction,
     progress,
     count,
   } = props;
 
-  const stringLookup = {
-    in: 'Breathe in',
-    out: 'Breathe out',
-    pause: 'Hold',
-  }
-
   return (
     <div className={`${styles.phaseInstruction} ${progress >= 0.9 ? styles.fadeOut : styles.fadeIn}`}>
-      {stringLookup[currentPhase]}
+      {currentInstruction}
       <span className={styles.phaseCount}>
         {(count > 1) ? count : '…'}
       </span>

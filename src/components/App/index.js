@@ -11,7 +11,13 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Hidden from '@material-ui/core/Hidden';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import Popover from '@material-ui/core/Popover';
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import Slider from '@material-ui/core/Slider';
 import SpeedIcon from '@material-ui/icons/Speed';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -45,6 +51,58 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const breathingPatterns = [
+  {
+    id: 'square_breathing',
+    name: 'Square Breathing',
+    description: 'A simple breathing exercise you can practice to reduce stress.',
+    phases: [
+      {
+        name: 'in',
+        units: 4,
+        instruction: 'Breathe in',
+      },
+      {
+        name: 'pause',
+        units: 4,
+        instruction: 'Hold',
+      },
+      {
+        name: 'out',
+        units: 4,
+        instruction: 'Breathe out',
+      },
+      {
+        name: 'pause',
+        units: 4,
+        instruction: 'Hold'
+      },
+    ]
+  },
+  {
+    id: '4-7-8_breathing',
+    name: '4-7-8 Breathing',
+    description: 'A breathing technique that is particularly good for sleep and for increasing oxygen intake.',
+    phases: [
+      {
+        name: 'in',
+        units: 4,
+        instruction: 'Breathe in through nose',
+      },
+      {
+        name: 'pause',
+        units: 7,
+        instruction: 'Hold your breath',
+      },
+      {
+        name: 'out',
+        units: 8,
+        instruction: 'Exhale with a WHOOSH',
+      }
+    ]
+  }
+]
+
 const App = () => {
   const [buzzOnSecond, setBuzzOnSecond] = useState(false);
   const [beepOnSecond, setBeepOnSecond] = useState(false);
@@ -54,6 +112,7 @@ const App = () => {
   const [sliderValue, setSliderValue] = useState(0.5);
   const [timeUnitInSeconds, setTimeUnitInSeconds] = useState(1);
   const [showInstructions, setShowInstructions] = useState(true);
+  const [selectedPattern, setSelectedPattern] = useState(breathingPatterns[0]);
   const popoverAnchorRef = useRef();
   const classes = useStyles();
 
@@ -94,6 +153,11 @@ const App = () => {
     setTimeUnitInSeconds(1 - value + 0.5);
   };
 
+  const handlePatternSelect = (event, value) => {
+    setSelectedPattern(value);
+    closeAllDrawers();
+  };
+
   return (
     <section className={styles.App}>
       <AppBar position="static" component="header">
@@ -111,6 +175,7 @@ const App = () => {
           beepOnChange={beepOnChange}
           timeUnitInSeconds={timeUnitInSeconds}
           showInstructions={showInstructions}
+          pattern={selectedPattern}
         />
         <Popover
           anchor="bottom"
@@ -246,6 +311,63 @@ const App = () => {
                 />
               </FormGroup>
             </FormControl>
+          </Container>
+        </Popover>
+        <Popover
+          anchor="bottom"
+          open={navValue === 'pattern'}
+          onClose={closeAllDrawers}
+          anchorEl={popoverAnchorRef.current}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          classes={{
+            paper: classes.fullWidthPopover,
+          }}
+          className={classes.popoverStyle}
+        >
+          <Container maxWidth="md">
+            <List>
+              {breathingPatterns.map((pattern) => {
+                const labelId = `select_${pattern.id}`;
+
+                return (
+                  <ListItem
+                    key={`${pattern.id}_key`}
+                    alignItems="flex-start"
+                    button
+                    selected={selectedPattern.id === pattern.id}
+                    onClick={event => handlePatternSelect(event, pattern)}
+                  >
+                    <ListItemIcon>
+                      { selectedPattern.id === pattern.id ? (
+                        <RadioButtonCheckedIcon />
+                      ) : (
+                        <RadioButtonUncheckedIcon />
+                      )}
+                    </ListItemIcon>
+                    <ListItemText
+                      id={labelId}
+                      primary={pattern.name}
+                      secondary={
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          color="textPrimary"
+                        >
+                          {pattern.description}
+                        </Typography>
+                      }
+                    />
+                  </ListItem>
+                );
+              })}
+            </List>
           </Container>
         </Popover>
       </Container>
