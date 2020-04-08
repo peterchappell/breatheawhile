@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './VisualisationSimple.module.css';
+
+import useVisualisationStyles from './useVisualisationStyles';
 import { ReactComponent as InVisual } from './in.svg';
 import { ReactComponent as OutVisual } from './out.svg';
 import { ReactComponent as PauseVisual } from './pause.svg';
@@ -11,26 +12,28 @@ const VisualisationSimple = (props) => {
     progress,
   } = props;
 
+  const classes = useVisualisationStyles();
+
   const radius = 130;
   const circumference = radius * 2 * Math.PI;
 
   return (
-    <div className={styles.container}>
-      <div className={`${styles.phase} ${progress >= 0.9 ? styles.fadeOut : styles.fadeIn}`}>
-        <InVisual className={styles.phaseVisual} style={{display: currentPhase === 'in' ? 'block' : 'none'}} />
-        <OutVisual className={styles.phaseVisual} style={{display: currentPhase === 'out' ? 'block' : 'none'}} />
-        <PauseVisual className={styles.phaseVisual} style={{display: currentPhase === 'pause' ? 'block' : 'none'}} />
+    <div className={classes.container}>
+      <div className={`${classes.phase} ${progress >= 0.9 ? classes.fadeOut : classes.fadeIn}`}>
+        <InVisual className={classes.phaseVisual} style={{display: currentPhase === 'in' ? 'block' : 'none'}} />
+        <OutVisual className={classes.phaseVisual} style={{display: currentPhase === 'out' ? 'block' : 'none'}} />
+        <PauseVisual className={classes.phaseVisual} style={{display: currentPhase === 'pause' ? 'block' : 'none'}} />
       </div>
-      <svg className={styles.circle}>
+      <svg className={classes.circle}>
         <circle
-          className={styles.background}
+          className={classes.background}
           cx="140"
           cy="140"
           r={radius}
           stroke={currentPhase === 'pause' ? '#236385' : '#333'}
         />
         <circle
-          className={styles.progress}
+          className={classes.progress}
           cx="140"
           cy="140"
           r={radius}

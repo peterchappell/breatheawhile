@@ -1,14 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
-import styles from './Main.module.css';
+import TextPrompt from 'components/TextPrompt';
 import VisualisationSimple from 'components/VisualisationSimple';
-import BreathingTextPrompt from 'components/BreathingTextPrompt';
+
 import { usePageVisibility } from 'hooks/visibility';
 
 const audioContext = new AudioContext();
 
-const Main = (props) => {
+const useStyles = makeStyles(() => ({
+  mainContainer: {
+    marginTop: '-20px',
+  }
+}));
 
+const AppMain = (props) => {
   const {
     buzzOnSecond,
     beepOnSecond,
@@ -18,6 +24,8 @@ const Main = (props) => {
     showInstructions,
     pattern,
   } = props;
+
+  const classes = useStyles();
 
   const [timeAccumulator, setTimeAccumulator] = useState(0);
   const [phaseProgress, setPhaseProgress] = useState(0);
@@ -91,17 +99,15 @@ const Main = (props) => {
   }, [interval, phaseIndex, timeAccumulator, pattern, timeUnitInSeconds, buzzOnChange, buzzOnSecond, beepOnChange, beepOnSecond, currentCount, isVisible]);
 
   return (
-    <div className={styles.Main}>
-      <div className={styles.content}>
-        { pattern.phases[phaseIndex] && (
-          <VisualisationSimple currentPhase={pattern.phases[phaseIndex].name} progress={phaseProgress/100} />
-        )}
-        { showInstructions && pattern.phases[phaseIndex] && (
-          <BreathingTextPrompt currentInstruction={pattern.phases[phaseIndex].instruction} progress={phaseProgress/100} count={currentCount} />
-        )}
-      </div>
+    <div className={classes.mainContainer}>
+      { pattern.phases[phaseIndex] && (
+        <VisualisationSimple currentPhase={pattern.phases[phaseIndex].name} progress={phaseProgress/100} />
+      )}
+      { showInstructions && pattern.phases[phaseIndex] && (
+        <TextPrompt currentInstruction={pattern.phases[phaseIndex].instruction} progress={phaseProgress/100} count={currentCount} />
+      )}
     </div>
   );
 };
 
-export default Main;
+export default AppMain;
