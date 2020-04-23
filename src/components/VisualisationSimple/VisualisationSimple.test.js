@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, cleanup } from 'utils/test-utils';
 
-import VisualisationSimple, { circumference } from './index';
+import VisualisationSimple from './index';
 
 describe('VisualisationSimple', () => {
   afterEach(cleanup);

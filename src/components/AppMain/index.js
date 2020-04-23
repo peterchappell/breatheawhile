@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextPrompt from 'components/TextPrompt';
 import VisualisationSimple from 'components/VisualisationSimple';
 
+import useInterval from 'hooks/useInterval';
 import { usePageVisibility } from 'hooks/visibility';
 
 const audioContext = new window.AudioContext();
@@ -32,8 +33,8 @@ const AppMain = (props) => {
   const [phaseIndex, setPhaseIndex] = useState(0);
   const [currentCount, setCurrentCount] = useState(0);
   const tickDivider = useRef(0.02);
+  const [tickTimeInSeconds, setTickTimeInSeconds] = useState(tickDivider.current * timeUnitInSeconds);
   const isVisible = usePageVisibility();
-  let interval = useRef();
 
   const doBeep = (vol, freq, duration) => {
     const v = audioContext.createOscillator();
@@ -52,32 +53,31 @@ const AppMain = (props) => {
     setPhaseProgress(0);
     setPhaseIndex(0);
     setCurrentCount(0);
-    clearInterval(interval.current);
-  }, [pattern.id, interval]);
+  }, [pattern.id]);
 
   useEffect(() => {
+    setTickTimeInSeconds(tickDivider.current * timeUnitInSeconds);
+  }, [timeUnitInSeconds]);
+
+  useInterval(() => {
     if (!pattern.phases[phaseIndex]) {
       return;
     }
 
     let totalPhaseTime = pattern.phases[phaseIndex].units * timeUnitInSeconds;
-    let tickTimeInSeconds = tickDivider.current * timeUnitInSeconds;
 
-    if (timeAccumulator <= totalPhaseTime) {
-      interval.current = setInterval(() => {
-        setTimeAccumulator(timeAccumulator => timeAccumulator + tickTimeInSeconds);
-        if (timeAccumulator >= currentCount * totalPhaseTime/pattern.phases[phaseIndex].units) {
-          if (isVisible && buzzOnSecond && navigator.vibrate && !(buzzOnChange && currentCount === 0)) {
-            navigator.vibrate(50);
-          }
-          if (isVisible && beepOnSecond && !(beepOnChange && currentCount === 0)) {
-            doBeep(5, 880, 50);
-          }
-          setCurrentCount(currentCount + 1);
+    if (timeAccumulator <= totalPhaseTime) {      
+      setTimeAccumulator(timeAccumulator => timeAccumulator + tickTimeInSeconds);
+      if (timeAccumulator >= currentCount * totalPhaseTime/pattern.phases[phaseIndex].units) {
+        if (isVisible && buzzOnSecond && navigator.vibrate && !(buzzOnChange && currentCount === 0)) {
+          navigator.vibrate(50);
         }
-      }, tickTimeInSeconds * 1000);
+        if (isVisible && beepOnSecond && !(beepOnChange && currentCount === 0)) {
+          doBeep(5, 880, 50);
+        }
+        setCurrentCount(currentCount + 1);
+      }
     } else {
-      clearInterval(interval.current);
       setTimeAccumulator(0);
       setCurrentCount(0);
       if (isVisible && buzzOnChange && navigator.vibrate) {
@@ -95,8 +95,7 @@ const AppMain = (props) => {
 
     setPhaseProgress(timeAccumulator/(pattern.phases[phaseIndex].units * timeUnitInSeconds) * 100);
 
-    return () => clearInterval(interval.current);
-  }, [interval, phaseIndex, timeAccumulator, pattern, timeUnitInSeconds, buzzOnChange, buzzOnSecond, beepOnChange, beepOnSecond, currentCount, isVisible]);
+  }, tickTimeInSeconds * 1000);
 
   return (
     <main className={classes.mainContainer}>
