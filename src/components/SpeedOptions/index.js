@@ -11,14 +11,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SpeedOptions = (props) => {
-  const { setTimeUnitInSeconds } = props;
+export const normaliseSliderValue = (value) => {
+  if (!value) {
+    return 0.5;
+  }
+  return 1 - value + 0.5;
+};
 
-  const [sliderValue, setSliderValue] = useState(0.5);
+const SpeedOptions = (props) => {
+  const { 
+    setTimeUnitInSeconds,
+    timeUnitInSeconds, 
+  } = props;
 
   const changeTimeUnit = (event, value) => {
-    setSliderValue(value);
-    setTimeUnitInSeconds(1 - value + 0.5);
+    setTimeUnitInSeconds(normaliseSliderValue(value));
   };
 
   const classes = useStyles();
@@ -26,13 +33,19 @@ const SpeedOptions = (props) => {
   return (
     <div className={classes.sliderContainer}>
       <Typography id="speed-slider">
-        Speed
+        {
+          timeUnitInSeconds === 1 ? (
+            `Count every ${timeUnitInSeconds.toFixed(2)} second`
+          ) : (
+            `Count every ${timeUnitInSeconds.toFixed(2)} seconds`
+          )
+        }
       </Typography>
       <Slider
-        value={sliderValue}
+        value={normaliseSliderValue(timeUnitInSeconds)}
         min={0}
         max={1}
-        step={0.05}
+        step={0.01}
         track={false}
         onChange={changeTimeUnit}
         className={classes.speedControl}

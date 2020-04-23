@@ -36,6 +36,7 @@ const AppOptions = (props) => {
     toggleShowInstructions,
     selectedPattern,
     handlePatternSelect,
+    timeUnitInSeconds,
     setTimeUnitInSeconds,
   } = props;
 
@@ -57,6 +58,7 @@ const AppOptions = (props) => {
           horizontal: 'center',
         }}
         className={classes.popoverStyle}
+        data-testid="popover_sound"
       >
         <SoundOptions
           beepOnSecond = {beepOnSecond}
@@ -86,8 +88,12 @@ const AppOptions = (props) => {
           paper: classes.fullWidthPopover,
         }}
         className={classes.popoverStyle}
+        data-testid="popover_speed"
       >
-        <SpeedOptions setTimeUnitInSeconds={setTimeUnitInSeconds} />
+        <SpeedOptions
+          setTimeUnitInSeconds={setTimeUnitInSeconds}
+          timeUnitInSeconds={timeUnitInSeconds}
+        />
       </Popover>
       <Popover
         anchor="bottom"
@@ -103,6 +109,7 @@ const AppOptions = (props) => {
           horizontal: 'center',
         }}
         className={classes.popoverStyle}
+        data-testid="popover_display"
       >
         <DisplayOptions
           showInstructions = {showInstructions}
@@ -126,6 +133,7 @@ const AppOptions = (props) => {
           paper: classes.fullWidthPopover,
         }}
         className={classes.popoverStyle}
+        data-testid="popover_pattern"
       >
         <PatternOptions
           selectedPattern={selectedPattern}

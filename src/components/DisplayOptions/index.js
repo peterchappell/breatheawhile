@@ -27,6 +27,7 @@ const DisplayOptions = (props) => {
               <Checkbox
                 checked={showInstructions}
                 onChange={toggleShowInstructions}
+                data-testid="display_options_checkbox"
               />
             }
             label="Show instruction prompt"

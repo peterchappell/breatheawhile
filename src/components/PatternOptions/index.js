@@ -19,7 +19,7 @@ const PatternOptions = (props) => {
 
   return (
     <Container maxWidth="md">
-      <List>
+      <List component="div">
         {breathingPatterns.map((pattern) => {
           const labelId = `select_${pattern.id}`;
 
@@ -28,11 +28,11 @@ const PatternOptions = (props) => {
               key={`${pattern.id}_key`}
               alignItems="flex-start"
               button
-              selected={selectedPattern.id === pattern.id}
+              selected={selectedPattern && selectedPattern.id === pattern.id}
               onClick={event => handlePatternSelect(event, pattern)}
             >
               <ListItemIcon>
-                { selectedPattern.id === pattern.id ? (
+                { selectedPattern && selectedPattern.id === pattern.id ? (
                   <RadioButtonCheckedIcon />
                 ) : (
                   <RadioButtonUncheckedIcon />

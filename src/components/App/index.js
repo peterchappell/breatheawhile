@@ -100,6 +100,7 @@ const App = () => {
           toggleShowInstructions = {toggleShowInstructions}
           selectedPattern = {selectedPattern}
           handlePatternSelect = {handlePatternSelect}
+          timeUnitInSeconds = {timeUnitInSeconds}
           setTimeUnitInSeconds = {setTimeUnitInSeconds}
         />
       </Container>

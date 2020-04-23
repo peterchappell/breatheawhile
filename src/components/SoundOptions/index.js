@@ -43,6 +43,7 @@ const SoundOptions = (props) => {
               />
             }
             label="On every count"
+            data-testid="toggleSoundOnCount"
           />
           <FormControlLabel
             control={
@@ -52,6 +53,7 @@ const SoundOptions = (props) => {
               />
             }
             label="On every change"
+            data-testid="toggleSoundOnChange"
           />
         </FormGroup>
       </FormControl>
@@ -70,6 +72,7 @@ const SoundOptions = (props) => {
               />
             }
             label="On every count"
+            data-testid="toggleVibrateOnCount"
           />
           <FormControlLabel
             control={
@@ -79,6 +82,7 @@ const SoundOptions = (props) => {
               />
             }
             label="On every change"
+            data-testid="toggleVibrateOnChange"
           />
         </FormGroup>
       </FormControl>

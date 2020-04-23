@@ -6,7 +6,7 @@ import VisualisationSimple from 'components/VisualisationSimple';
 
 import { usePageVisibility } from 'hooks/visibility';
 
-const audioContext = new AudioContext();
+const audioContext = new window.AudioContext();
 
 const useStyles = makeStyles(() => ({
   mainContainer: {
@@ -99,14 +99,19 @@ const AppMain = (props) => {
   }, [interval, phaseIndex, timeAccumulator, pattern, timeUnitInSeconds, buzzOnChange, buzzOnSecond, beepOnChange, beepOnSecond, currentCount, isVisible]);
 
   return (
-    <div className={classes.mainContainer}>
+    <main className={classes.mainContainer}>
       { pattern.phases[phaseIndex] && (
         <VisualisationSimple currentPhase={pattern.phases[phaseIndex].name} progress={phaseProgress/100} />
       )}
       { showInstructions && pattern.phases[phaseIndex] && (
-        <TextPrompt currentInstruction={pattern.phases[phaseIndex].instruction} progress={phaseProgress/100} count={currentCount} />
+        <TextPrompt
+          currentInstruction={pattern.phases[phaseIndex].instruction}
+          patternName={pattern.name}
+          progress={phaseProgress/100}
+          count={currentCount}
+        />
       )}
-    </div>
+    </main>
   );
 };
 
