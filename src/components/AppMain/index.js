@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextPrompt from 'components/TextPrompt';
 import VisualisationSimple from 'components/VisualisationSimple';
 
+import { useSoundOptionsState } from 'context/SoundOptionsContext';
 import useInterval from 'hooks/useInterval';
 import { usePageVisibility } from 'hooks/visibility';
 import Pattern from 'utils/flow-types';
@@ -18,10 +19,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 type Props = {
-  buzzOnSecond: boolean,
-  beepOnSecond: boolean,
-  buzzOnChange: boolean,
-  beepOnChange: boolean,
   timeUnitInSeconds: number,
   showInstructions: boolean,
   pattern: Pattern,
@@ -29,16 +26,19 @@ type Props = {
 
 const AppMain = (props: Props) => {
   const {
-    buzzOnSecond,
-    beepOnSecond,
-    buzzOnChange,
-    beepOnChange,
     timeUnitInSeconds,
     showInstructions,
     pattern,
   } = props;
 
   const classes = useStyles();
+
+  const {
+    vibrateOnCount,
+    soundOnCount,
+    vibrateOnChange,
+    soundOnChange,
+  } = useSoundOptionsState();
 
   const [timeAccumulator, setTimeAccumulator] = useState(0);
   const [phaseProgress, setPhaseProgress] = useState(0);
@@ -81,10 +81,10 @@ const AppMain = (props: Props) => {
     if (timeAccumulator <= totalPhaseTime) {      
       setTimeAccumulator(() => timeAccumulator + tickTimeInSeconds);
       if (timeAccumulator >= currentCount * totalPhaseTime/pattern.phases[phaseIndex].units) {
-        if (isVisible && buzzOnSecond && navigator.vibrate && !(buzzOnChange && currentCount === 0)) {
+        if (isVisible && vibrateOnCount && navigator.vibrate && !(vibrateOnChange && currentCount === 0)) {
           navigator.vibrate(50);
         }
-        if (isVisible && beepOnSecond && !(beepOnChange && currentCount === 0)) {
+        if (isVisible && soundOnCount && !(soundOnChange && currentCount === 0)) {
           doBeep(5, 880, 50);
         }
         setCurrentCount(currentCount + 1);
@@ -92,10 +92,10 @@ const AppMain = (props: Props) => {
     } else {
       setTimeAccumulator(0);
       setCurrentCount(0);
-      if (isVisible && buzzOnChange && navigator.vibrate) {
+      if (isVisible && vibrateOnChange && navigator.vibrate) {
         navigator.vibrate(200);
       }
-      if (isVisible && beepOnChange) {
+      if (isVisible && soundOnChange) {
         doBeep(40, 880, 50);
       }
       if (phaseIndex < pattern.phases.length - 1) {

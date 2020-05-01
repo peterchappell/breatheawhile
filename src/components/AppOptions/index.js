@@ -23,14 +23,6 @@ type Props = {
   navValue: string,
   closeAllDrawers: Function,
   popoverAnchorRef: ElementRef,
-  buzzOnSecond: boolean,
-  toggleBuzzOnSecond: Function,
-  beepOnSecond: boolean,
-  toggleBeepOnSecond: Function,
-  buzzOnChange: boolean,
-  toggleBuzzOnChange: Function,
-  beepOnChange: boolean,
-  toggleBeepOnChange: Function,
   timeUnitInSeconds: number,
   setTimeUnitInSeconds: Function,
   showInstructions: boolean,
@@ -44,14 +36,6 @@ const AppOptions = (props: Props) => {
     navValue,
     closeAllDrawers,
     popoverAnchorRef,
-    beepOnSecond,
-    toggleBeepOnSecond,
-    beepOnChange,
-    toggleBeepOnChange,
-    buzzOnSecond,
-    toggleBuzzOnSecond,
-    buzzOnChange,
-    toggleBuzzOnChange,
     showInstructions,
     toggleShowInstructions,
     selectedPattern,
@@ -80,16 +64,7 @@ const AppOptions = (props: Props) => {
         className={classes.popoverStyle}
         data-testid="popover_sound"
       >
-        <SoundOptions
-          beepOnSecond = {beepOnSecond}
-          toggleBeepOnSecond = {toggleBeepOnSecond}
-          beepOnChange = {beepOnChange}
-          toggleBeepOnChange = {toggleBeepOnChange}
-          buzzOnSecond = {buzzOnSecond}
-          toggleBuzzOnSecond = {toggleBuzzOnSecond}
-          buzzOnChange = {buzzOnChange}
-          toggleBuzzOnChange = {toggleBuzzOnChange}
-        />
+        <SoundOptions />
       </Popover>
       <Popover
         anchor="bottom"

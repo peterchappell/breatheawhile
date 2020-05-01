@@ -11,32 +11,20 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormLabel from '@material-ui/core/FormLabel';
 import Hidden from '@material-ui/core/Hidden';
 
+import actions from 'context/actions';
+import { useSoundOptionsState, useSoundOptionsDispatch } from 'context/SoundOptionsContext';
 import useGlobalStyles from 'hooks/useGlobalStyles';
 
-type Props = {
-  beepOnSecond: boolean,
-  toggleBeepOnSecond: Function,
-  beepOnChange: boolean,
-  toggleBeepOnChange: Function,
-  buzzOnSecond: boolean,
-  toggleBuzzOnSecond: Function,
-  buzzOnChange: boolean,
-  toggleBuzzOnChange: Function,
-};
-
-const SoundOptions = (props: Props) => {
+const SoundOptions = () => {
   const {
-    beepOnSecond,
-    toggleBeepOnSecond,
-    beepOnChange,
-    toggleBeepOnChange,
-    buzzOnSecond,
-    toggleBuzzOnSecond,
-    buzzOnChange,
-    toggleBuzzOnChange,
-  } = props;
+    vibrateOnCount,
+    soundOnCount,
+    vibrateOnChange,
+    soundOnChange,
+  } = useSoundOptionsState();
 
   const globalClasses = useGlobalStyles();
+  const dispatchSettingChange = useSoundOptionsDispatch();
 
   return (
     <Container maxWidth="sm">
@@ -49,22 +37,22 @@ const SoundOptions = (props: Props) => {
           <FormControlLabel
             control={
               <Checkbox
-                checked={beepOnSecond}
-                onChange={toggleBeepOnSecond}
+                checked={soundOnCount}
+                onChange={() => dispatchSettingChange({ type: actions.TOGGLE_SOUND_ON_COUNT })}
+                data-testid="toggleSoundOnCount"
               />
             }
             label="On every count"
-            data-testid="toggleSoundOnCount"
           />
           <FormControlLabel
             control={
               <Checkbox
-                checked={beepOnChange}
-                onChange={toggleBeepOnChange}
+                checked={soundOnChange}
+                onChange={() => dispatchSettingChange({ type: actions.TOGGLE_SOUND_ON_CHANGE })}
+                data-testid="toggleSoundOnChange"
               />
             }
             label="On every change"
-            data-testid="toggleSoundOnChange"
           />
         </FormGroup>
       </FormControl>
@@ -78,22 +66,22 @@ const SoundOptions = (props: Props) => {
           <FormControlLabel
             control={
               <Checkbox
-                checked={buzzOnSecond}
-                onChange={toggleBuzzOnSecond}
+                checked={vibrateOnCount}
+                onChange={() => dispatchSettingChange({ type: actions.TOGGLE_VIBRATE_ON_COUNT })}
+                data-testid="toggleVibrateOnCount"
               />
             }
             label="On every count"
-            data-testid="toggleVibrateOnCount"
           />
           <FormControlLabel
             control={
               <Checkbox
-                checked={buzzOnChange}
-                onChange={toggleBuzzOnChange}
+                checked={vibrateOnChange}
+                onChange={() => dispatchSettingChange({ type: actions.TOGGLE_VIBRATE_ON_CHANGE })}
+                data-testid="toggleVibrateOnChange"
               />
             }
             label="On every change"
-            data-testid="toggleVibrateOnChange"
           />
         </FormGroup>
       </FormControl>
