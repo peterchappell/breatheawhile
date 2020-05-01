@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { SoundOptionsProvider } from 'context/SoundOptionsContext';
+import { OptionsProvider } from 'context/OptionsContext';
 import AppHeader from 'components/AppHeader';
 import AppMain from 'components/AppMain';
 import AppNav from 'components/AppNav';
@@ -55,7 +55,7 @@ const App = () => {
     <section className={classes.appContainer}>
       <AppHeader />
       <Container maxWidth="md" component="main">
-        <SoundOptionsProvider>
+        <OptionsProvider>
           <AppMain
             timeUnitInSeconds={timeUnitInSeconds}
             showInstructions={showInstructions}
@@ -72,7 +72,7 @@ const App = () => {
             timeUnitInSeconds = {timeUnitInSeconds}
             setTimeUnitInSeconds = {setTimeUnitInSeconds}
           />
-        </SoundOptionsProvider>
+        </OptionsProvider>
       </Container>
       <AppNav
         navValue = {navValue}

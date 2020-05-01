@@ -12,7 +12,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Hidden from '@material-ui/core/Hidden';
 
 import actions from 'context/actions';
-import { useSoundOptionsState, useSoundOptionsDispatch } from 'context/SoundOptionsContext';
+import { useOptionsState, useOptionsDispatch } from 'context/OptionsContext';
 import useGlobalStyles from 'hooks/useGlobalStyles';
 
 const SoundOptions = () => {
@@ -21,10 +21,10 @@ const SoundOptions = () => {
     soundOnCount,
     vibrateOnChange,
     soundOnChange,
-  } = useSoundOptionsState();
+  } = useOptionsState();
 
   const globalClasses = useGlobalStyles();
-  const dispatchSettingChange = useSoundOptionsDispatch();
+  const dispatchSettingsChange = useOptionsDispatch();
 
   return (
     <Container maxWidth="sm">
@@ -38,7 +38,7 @@ const SoundOptions = () => {
             control={
               <Checkbox
                 checked={soundOnCount}
-                onChange={() => dispatchSettingChange({ type: actions.TOGGLE_SOUND_ON_COUNT })}
+                onChange={() => dispatchSettingsChange({ type: actions.TOGGLE_SOUND_ON_COUNT })}
                 data-testid="toggleSoundOnCount"
               />
             }
@@ -48,7 +48,7 @@ const SoundOptions = () => {
             control={
               <Checkbox
                 checked={soundOnChange}
-                onChange={() => dispatchSettingChange({ type: actions.TOGGLE_SOUND_ON_CHANGE })}
+                onChange={() => dispatchSettingsChange({ type: actions.TOGGLE_SOUND_ON_CHANGE })}
                 data-testid="toggleSoundOnChange"
               />
             }
@@ -67,7 +67,7 @@ const SoundOptions = () => {
             control={
               <Checkbox
                 checked={vibrateOnCount}
-                onChange={() => dispatchSettingChange({ type: actions.TOGGLE_VIBRATE_ON_COUNT })}
+                onChange={() => dispatchSettingsChange({ type: actions.TOGGLE_VIBRATE_ON_COUNT })}
                 data-testid="toggleVibrateOnCount"
               />
             }
@@ -77,7 +77,7 @@ const SoundOptions = () => {
             control={
               <Checkbox
                 checked={vibrateOnChange}
-                onChange={() => dispatchSettingChange({ type: actions.TOGGLE_VIBRATE_ON_CHANGE })}
+                onChange={() => dispatchSettingsChange({ type: actions.TOGGLE_VIBRATE_ON_CHANGE })}
                 data-testid="toggleVibrateOnChange"
               />
             }

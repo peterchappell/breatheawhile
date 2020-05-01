@@ -1,0 +1,79 @@
+// @flow
+import React, { useReducer, Node as ReactNode } from 'react';
+import actions from './actions';
+
+type Action = {
+  type: actions.TOGGLE_SOUND_ON_COUNT | actions.TOGGLE_SOUND_ON_CHANGE | actions.TOGGLE_VIBRATE_ON_COUNT | actions.TOGGLE_VIBRATE_ON_CHANGE,
+}
+
+const OptionsStateContext = React.createContext();
+const OptionsDispatchContext = React.createContext();
+
+const initialState = {
+  soundOnCount: false,
+  soundOnChange: false,
+  vibrateOnCount: false,
+  vibrateOnChange: false,
+}
+
+const optionsReducer = (state, action: Action) => {
+  switch (action.type) {
+    case actions.TOGGLE_SOUND_ON_COUNT: {
+      return {
+        ...state,
+        soundOnCount: !state.soundOnCount,
+      }
+    }
+    case actions.TOGGLE_SOUND_ON_CHANGE: {
+      return {
+        ...state,
+        soundOnChange: !state.soundOnChange,
+      }
+    }
+    case actions.TOGGLE_VIBRATE_ON_COUNT: {
+      return {
+        ...state,
+        vibrateOnCount: !state.vibrateOnCount,
+      }
+    }
+    case actions.TOGGLE_VIBRATE_ON_CHANGE: {
+      return {
+        ...state,
+        vibrateOnChange: !state.vibrateOnChange,
+      }
+    }
+    default: {
+      throw new Error(`Unhandled action type: ${action.type}`)
+    }
+  }
+}
+
+const OptionsProvider = (props: ({ children: ReactNode })) => {
+  const { children } = props;
+  const [state, dispatch] = useReducer(optionsReducer, initialState)
+  return (
+    <OptionsStateContext.Provider value={state}>
+      <OptionsDispatchContext.Provider value={dispatch}>
+        {children}
+      </OptionsDispatchContext.Provider>
+    </OptionsStateContext.Provider>
+  );
+};
+
+const useOptionsState = () => {
+  const context = React.useContext(OptionsStateContext);
+  if (context === undefined) {
+    throw new Error('useOptionsState must be used within a OptionsProvider');
+  }
+  return context;
+};
+
+function useOptionsDispatch() {
+  const context = React.useContext(OptionsDispatchContext)
+  if (context === undefined) {
+    throw new Error('useOptionsDispatch must be used within a OptionsProvider');
+  }
+  return context;
+}
+
+export { OptionsProvider, useOptionsState, useOptionsDispatch };

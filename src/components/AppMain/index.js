@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextPrompt from 'components/TextPrompt';
 import VisualisationSimple from 'components/VisualisationSimple';
 
-import { useSoundOptionsState } from 'context/SoundOptionsContext';
+import { useOptionsState } from 'context/OptionsContext';
 import useInterval from 'hooks/useInterval';
 import { usePageVisibility } from 'hooks/visibility';
 import Pattern from 'utils/flow-types';
@@ -38,7 +38,7 @@ const AppMain = (props: Props) => {
     soundOnCount,
     vibrateOnChange,
     soundOnChange,
-  } = useSoundOptionsState();
+  } = useOptionsState();
 
   const [timeAccumulator, setTimeAccumulator] = useState(0);
   const [phaseProgress, setPhaseProgress] = useState(0);

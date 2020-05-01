@@ -2,7 +2,7 @@ import React from 'react';
 import { render, cleanup } from 'utils/test-utils';
 import breathingPatterns from 'utils/breathingPatterns';
 
-import { SoundOptionsProvider } from 'context/SoundOptionsContext';
+import { OptionsProvider } from 'context/OptionsContext';
 import AppMain from './index';
 
 describe('AppMain', () => {
@@ -10,9 +10,9 @@ describe('AppMain', () => {
 
   it('renders', () => {
     const { asFragment } = render(
-      <SoundOptionsProvider>
+      <OptionsProvider>
         <AppMain pattern={breathingPatterns[0]} />
-      </SoundOptionsProvider>
+      </OptionsProvider>
     );
     expect(asFragment).toMatchSnapshot();
   });

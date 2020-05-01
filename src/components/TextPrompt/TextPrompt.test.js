@@ -17,7 +17,7 @@ describe('TextPrompt', () => {
       patternName: 'Test',
       count: 6,
     };
-    const { getByText } = render(<TextPrompt {...props} />);
+    const { getByText } = render(<TextPrompt props={props} />);
     expect(getByText(props.currentInstruction, { exact: false })).toBeTruthy();
     expect(getByText(props.patternName)).toBeTruthy();
     expect(getByText(String(props.count))).toBeTruthy();
