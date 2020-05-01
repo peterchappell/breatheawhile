@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+// @flow
+import React  from 'react';
 
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
@@ -18,7 +19,12 @@ export const normaliseSliderValue = (value) => {
   return 1 - value + 0.5;
 };
 
-const SpeedOptions = (props) => {
+type Props = {
+  setTimeUnitInSeconds: Function,
+  timeUnitInSeconds: number,
+}
+
+const SpeedOptions = (props: Props) => {
   const { 
     setTimeUnitInSeconds,
     timeUnitInSeconds, 

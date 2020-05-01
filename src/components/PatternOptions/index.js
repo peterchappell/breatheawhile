@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 
 import Container from '@material-ui/core/Container';
@@ -10,8 +11,14 @@ import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import Typography from '@material-ui/core/Typography';
 
 import breathingPatterns from 'utils/breathingPatterns';
+import Pattern from 'utils/flow-types';
 
-const PatternOptions = (props) => {
+type Props = {
+  selectedPattern: Pattern,
+  handlePatternSelect: Function,
+};
+
+const PatternOptions = (props: Props) => {
   const {
     selectedPattern,
     handlePatternSelect,

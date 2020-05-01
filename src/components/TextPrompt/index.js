@@ -1,9 +1,9 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
     marginTop: '20px',
     textAlign: 'center',
@@ -25,7 +25,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TextPrompt = (props) => {
+type Props = {
+  currentInstruction: string,
+  progress: number,
+  count: number,
+  patternName: string,
+};
+
+const TextPrompt = (props: Props) => {
   const {
     currentInstruction,
     progress,
@@ -51,19 +58,5 @@ const TextPrompt = (props) => {
     </div>
   );
 }
-
-TextPrompt.propTypes = {
-  currentInstruction: PropTypes.string,
-  patternName: PropTypes.string,
-  progress: PropTypes.number,
-  count: PropTypes.number,
-};
-
-TextPrompt.defaultProps = {
-  currentInstruction: '',
-  patternName: '',
-  progress: 0,
-  count: 0,
-};
 
 export default TextPrompt;

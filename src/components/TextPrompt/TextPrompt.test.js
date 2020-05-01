@@ -30,7 +30,7 @@ describe('TextPrompt', () => {
       count: 0,
     };
     const { getByText } = render(
-      <TextPrompt {...props} />);
+      <TextPrompt props={props} />);
     expect(getByText('…')).toBeTruthy();
   });
 });

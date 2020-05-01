@@ -1,4 +1,5 @@
-import React from 'react';
+// @flow
+import React, { ElementRef } from 'react';
 
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -7,7 +8,13 @@ import TuneIcon from '@material-ui/icons/Tune';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 
-const AppNav = (props) => {
+type Props = {
+  navValue: string,
+  handleNavChange: Function,
+  popoverAnchorRef: ElementRef,
+};
+
+const AppNav = (props: Props) => {
   const {
     navValue,
     handleNavChange,

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 
 import Checkbox from '@material-ui/core/Checkbox';
@@ -12,8 +13,18 @@ import Hidden from '@material-ui/core/Hidden';
 
 import useGlobalStyles from 'hooks/useGlobalStyles';
 
-const SoundOptions = (props) => {
+type Props = {
+  beepOnSecond: boolean,
+  toggleBeepOnSecond: Function,
+  beepOnChange: boolean,
+  toggleBeepOnChange: Function,
+  buzzOnSecond: boolean,
+  toggleBuzzOnSecond: Function,
+  buzzOnChange: boolean,
+  toggleBuzzOnChange: Function,
+};
 
+const SoundOptions = (props: Props) => {
   const {
     beepOnSecond,
     toggleBeepOnSecond,

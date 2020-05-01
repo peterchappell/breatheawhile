@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, cleanup, screen, fireEvent } from 'utils/test-utils';
 
-import PatternOptions from './index';
 import breathingPatterns from 'utils/breathingPatterns';
+import PatternOptions from './index';
 
 describe('PatternOptions', () => {
   afterEach(cleanup);

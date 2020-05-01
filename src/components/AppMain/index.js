@@ -1,3 +1,4 @@
+// @flow
 import React, { useState, useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -6,6 +7,7 @@ import VisualisationSimple from 'components/VisualisationSimple';
 
 import useInterval from 'hooks/useInterval';
 import { usePageVisibility } from 'hooks/visibility';
+import Pattern from 'utils/flow-types';
 
 const audioContext = new window.AudioContext();
 
@@ -15,7 +17,17 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const AppMain = (props) => {
+type Props = {
+  buzzOnSecond: boolean,
+  beepOnSecond: boolean,
+  buzzOnChange: boolean,
+  beepOnChange: boolean,
+  timeUnitInSeconds: number,
+  showInstructions: boolean,
+  pattern: Pattern,
+};
+
+const AppMain = (props: Props) => {
   const {
     buzzOnSecond,
     beepOnSecond,
@@ -64,10 +76,10 @@ const AppMain = (props) => {
       return;
     }
 
-    let totalPhaseTime = pattern.phases[phaseIndex].units * timeUnitInSeconds;
+    const totalPhaseTime = pattern.phases[phaseIndex].units * timeUnitInSeconds;
 
     if (timeAccumulator <= totalPhaseTime) {      
-      setTimeAccumulator(timeAccumulator => timeAccumulator + tickTimeInSeconds);
+      setTimeAccumulator(() => timeAccumulator + tickTimeInSeconds);
       if (timeAccumulator >= currentCount * totalPhaseTime/pattern.phases[phaseIndex].units) {
         if (isVisible && buzzOnSecond && navigator.vibrate && !(buzzOnChange && currentCount === 0)) {
           navigator.vibrate(50);

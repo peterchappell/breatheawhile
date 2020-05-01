@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 
 import Checkbox from '@material-ui/core/Checkbox';
@@ -9,7 +10,12 @@ import FormLabel from '@material-ui/core/FormLabel';
 
 import useGlobalStyles from 'hooks/useGlobalStyles';
 
-const DisplayOptions = (props) => {
+type Props = {
+  showInstructions: boolean,
+  toggleShowInstructions: Function,
+};
+
+const DisplayOptions = (props: Props) => {
   const {
     showInstructions,
     toggleShowInstructions,

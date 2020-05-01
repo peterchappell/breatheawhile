@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useVisualisationStyles = makeStyles((theme) => ({
+const useVisualisationStyles = makeStyles(() => ({
   container: {
     position: 'relative'
   },

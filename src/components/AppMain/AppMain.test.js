@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, cleanup } from 'utils/test-utils';
+import breathingPatterns from 'utils/breathingPatterns';
 
 import AppMain from './index';
-import breathingPatterns from 'utils/breathingPatterns';
 
 describe('AppMain', () => {
   afterEach(cleanup);

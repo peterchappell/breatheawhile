@@ -12,7 +12,7 @@ describe('DisplayOptions', () => {
   });
 
   it('renders a checkbox that is checked depending on the showInstructions prop', () => {
-    const { container, rerender } = render(<DisplayOptions showInstructions={true} />);
+    const { container, rerender } = render(<DisplayOptions showInstructions />);
     expect(container.querySelector('input[type=checkbox]').checked).toBeTruthy();
     rerender(<DisplayOptions showInstructions={false} />);
     expect(container.querySelector('input[type=checkbox]').checked).toBeFalsy();
@@ -20,7 +20,7 @@ describe('DisplayOptions', () => {
 
   it('calls the toggleShowInstructions prop function when the checkbox is clicked', () => {
     const mockToggleFunction = jest.fn();
-    const { container } = render(<DisplayOptions showInstructions={true} toggleShowInstructions={mockToggleFunction} />);
+    const { container } = render(<DisplayOptions showInstructions toggleShowInstructions={mockToggleFunction} />);
     const checkboxEl = container.querySelector('input[type=checkbox]');
     fireEvent.click(checkboxEl);
     expect(mockToggleFunction).toHaveBeenCalledTimes(1);

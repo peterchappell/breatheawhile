@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { ElementRef } from 'react';
 
+import { makeStyles } from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
 
 import DisplayOptions from 'components/DisplayOptions';
 import PatternOptions from 'components/PatternOptions';
 import SoundOptions from 'components/SoundOptions';
 import SpeedOptions from 'components/SpeedOptions';
+import Pattern from 'utils/flow-types';
 
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   popoverStyle: {
     transform: `translateY(-20px)`,
     marginBottom: '56px',
@@ -19,7 +19,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AppOptions = (props) => {
+type Props = {
+  navValue: string,
+  closeAllDrawers: Function,
+  popoverAnchorRef: ElementRef,
+  buzzOnSecond: boolean,
+  toggleBuzzOnSecond: Function,
+  beepOnSecond: boolean,
+  toggleBeepOnSecond: Function,
+  buzzOnChange: boolean,
+  toggleBuzzOnChange: Function,
+  beepOnChange: boolean,
+  toggleBeepOnChange: Function,
+  timeUnitInSeconds: number,
+  setTimeUnitInSeconds: Function,
+  showInstructions: boolean,
+  toggleShowInstructions: Function,
+  selectedPattern: Pattern,
+  handlePatternSelect: Function,
+};
+
+const AppOptions = (props: Props) => {
   const {
     navValue,
     closeAllDrawers,
@@ -43,7 +63,7 @@ const AppOptions = (props) => {
   const classes = useStyles();
 
   return (
-    <React.Fragment>
+    <>
       <Popover
         anchor="bottom"
         open={navValue === 'sound'}
@@ -140,7 +160,7 @@ const AppOptions = (props) => {
           handlePatternSelect={handlePatternSelect}
         />
       </Popover>
-    </React.Fragment>
+    </>
   )
 };
 

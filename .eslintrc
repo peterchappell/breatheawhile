@@ -1,0 +1,27 @@
+{
+  "extends": [
+    "react-app",
+    "airbnb",
+    "plugin:jsx-a11y/recommended",
+    "prettier",
+    "prettier/react",
+    "plugin:testing-library/recommended",
+    "plugin:testing-library/react"
+  ],
+  "plugins": [
+    "jsx-a11y",
+    "prettier",
+    "testing-library"
+  ],
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/default-props-match-prop-types": ["error", { "allowRequiredDefaults": true }]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    }
+  }
+}

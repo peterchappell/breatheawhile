@@ -1,5 +1,5 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import useVisualisationStyles from './useVisualisationStyles';
 import { ReactComponent as InVisual } from './in.svg';
@@ -9,7 +9,12 @@ import { ReactComponent as PauseVisual } from './pause.svg';
 const radius = 130;
 export const circumference = radius * 2 * Math.PI;
 
-const VisualisationSimple = (props) => {
+type Props = {
+  currentPhase?: number,
+  progress?: number,
+};
+
+const VisualisationSimple = (props: Props) => {
   const {
     currentPhase,
     progress,
@@ -53,18 +58,14 @@ const VisualisationSimple = (props) => {
           strokeDashoffset={circumference - progress * circumference}
           stroke={currentPhase === 'pause' ? '#333' : '#236385'}
         />
+        <p>${circumference} : ${progress}</p>
       </svg>
     </div>
   );
-}
-
-VisualisationSimple.propTypes = {
-  currentPhase: PropTypes.string,
-  progress: PropTypes.number,
 };
 
 VisualisationSimple.defaultProps = {
-  currentPhase: 'in',
+  currentPhase: 0,
   progress: 0,
 };
 
