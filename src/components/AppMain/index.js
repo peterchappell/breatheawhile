@@ -20,14 +20,12 @@ const useStyles = makeStyles(() => ({
 
 type Props = {
   timeUnitInSeconds: number,
-  showInstructions: boolean,
   pattern: Pattern,
 };
 
 const AppMain = (props: Props) => {
   const {
     timeUnitInSeconds,
-    showInstructions,
     pattern,
   } = props;
 
@@ -38,6 +36,7 @@ const AppMain = (props: Props) => {
     soundOnCount,
     vibrateOnChange,
     soundOnChange,
+    showInstructions,
   } = useOptionsState();
 
   const [timeAccumulator, setTimeAccumulator] = useState(0);

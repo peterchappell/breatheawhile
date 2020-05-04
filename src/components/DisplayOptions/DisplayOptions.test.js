@@ -1,28 +1,39 @@
 import React from 'react';
 import { render, cleanup, fireEvent } from 'utils/test-utils';
 
+import { OptionsProvider } from "context/OptionsContext";
 import DisplayOptions from './index';
 
 describe('DisplayOptions', () => {
   afterEach(cleanup);
 
   it('renders', () => {
-    const { asFragment } = render(<DisplayOptions />);
+    const { asFragment } = render(
+      <OptionsProvider>
+        <DisplayOptions />
+      </OptionsProvider>
+    );
     expect(asFragment).toMatchSnapshot();
   });
 
-  it('renders a checkbox that is checked depending on the showInstructions prop', () => {
-    const { container, rerender } = render(<DisplayOptions showInstructions />);
+  it('renders a checkbox that is checked by default', () => {
+    const { container } = render(
+      <OptionsProvider>
+        <DisplayOptions />
+      </OptionsProvider>
+    );
     expect(container.querySelector('input[type=checkbox]').checked).toBeTruthy();
-    rerender(<DisplayOptions showInstructions={false} />);
-    expect(container.querySelector('input[type=checkbox]').checked).toBeFalsy();
   });
 
-  it('calls the toggleShowInstructions prop function when the checkbox is clicked', () => {
-    const mockToggleFunction = jest.fn();
-    const { container } = render(<DisplayOptions showInstructions toggleShowInstructions={mockToggleFunction} />);
-    const checkboxEl = container.querySelector('input[type=checkbox]');
+  it('changes the value for the checkbox when checkbox is clicked', () => {
+    const { getByLabelText } = render(
+      <OptionsProvider>
+        <DisplayOptions />
+      </OptionsProvider>
+    );
+    const checkboxEl = getByLabelText('Show instruction text');
+    expect(checkboxEl.checked).toBeTruthy();
     fireEvent.click(checkboxEl);
-    expect(mockToggleFunction).toHaveBeenCalledTimes(1);
+    expect(checkboxEl.checked).toBeFalsy();
   });
 });

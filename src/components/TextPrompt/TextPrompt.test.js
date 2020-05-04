@@ -1,13 +1,18 @@
 import React from 'react';
 import { render, cleanup } from 'utils/test-utils';
 
+import { OptionsProvider } from "context/OptionsContext";
 import TextPrompt from './index';
 
 describe('TextPrompt', () => {
   afterEach(cleanup);
 
   it('renders', () => {
-    const { asFragment } = render(<TextPrompt />);
+    const { asFragment } = render(
+      <OptionsProvider>
+        <TextPrompt />
+      </OptionsProvider>
+    );
     expect(asFragment).toMatchSnapshot();
   });
 
@@ -16,8 +21,18 @@ describe('TextPrompt', () => {
       currentInstruction: 'Breathe In',
       patternName: 'Test',
       count: 6,
+      progress: 0,
     };
-    const { getByText } = render(<TextPrompt props={props} />);
+    const { getByText } = render(
+      <OptionsProvider>
+        <TextPrompt
+          currentInstruction={props.currentInstruction}
+          patternName={props.patternName}
+          count={props.count}
+          progress={props.progress}
+        />
+      </OptionsProvider>
+    );
     expect(getByText(props.currentInstruction, { exact: false })).toBeTruthy();
     expect(getByText(props.patternName)).toBeTruthy();
     expect(getByText(String(props.count))).toBeTruthy();
@@ -28,9 +43,13 @@ describe('TextPrompt', () => {
       currentInstruction: 'Breathe In',
       patternName: 'Test',
       count: 0,
+      progress: 0,
     };
     const { getByText } = render(
-      <TextPrompt props={props} />);
+      <OptionsProvider>
+        <TextPrompt props={props} />
+      </OptionsProvider>
+    );
     expect(getByText('…')).toBeTruthy();
   });
 });

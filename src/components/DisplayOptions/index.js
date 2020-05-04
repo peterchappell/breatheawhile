@@ -8,20 +8,15 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 
+import actions from 'context/actions';
+import { useOptionsState, useOptionsDispatch } from 'context/OptionsContext';
 import useGlobalStyles from 'hooks/useGlobalStyles';
 
-type Props = {
-  showInstructions: boolean,
-  toggleShowInstructions: Function,
-};
-
-const DisplayOptions = (props: Props) => {
-  const {
-    showInstructions,
-    toggleShowInstructions,
-  } = props;
-
+const DisplayOptions = () => {
   const globalClasses = useGlobalStyles();
+  const dispatchSettingsChange = useOptionsDispatch();
+
+  const { showInstructions } = useOptionsState();
 
   return (
     <Container maxWidth="md">
@@ -32,11 +27,11 @@ const DisplayOptions = (props: Props) => {
             control={
               <Checkbox
                 checked={showInstructions}
-                onChange={toggleShowInstructions}
+                onChange={() => dispatchSettingsChange({ type: actions.TOGGLE_SHOW_INSTRUCTIONS })}
                 data-testid="display_options_checkbox"
               />
             }
-            label="Show instruction prompt"
+            label="Show instruction text"
           />
         </FormGroup>
       </FormControl>

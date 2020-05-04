@@ -24,15 +24,10 @@ const useStyles = makeStyles(() => ({
 const App = () => {
   const [navValue, setNavValue] = useState();
   const [timeUnitInSeconds, setTimeUnitInSeconds] = useState(1);
-  const [showInstructions, setShowInstructions] = useState(true);
   const [selectedPattern, setSelectedPattern] = useState(breathingPatterns[0]);
   const popoverAnchorRef = useRef();
 
   const classes = useStyles();
-
-  const toggleShowInstructions = () => {
-    setShowInstructions(!showInstructions);
-  };
 
   const closeAllDrawers = () => {
     setNavValue('');
@@ -58,15 +53,12 @@ const App = () => {
         <OptionsProvider>
           <AppMain
             timeUnitInSeconds={timeUnitInSeconds}
-            showInstructions={showInstructions}
             pattern={selectedPattern}
           />
           <AppOptions
             navValue = {navValue}
             closeAllDrawers = {closeAllDrawers}
             popoverAnchorRef = {popoverAnchorRef}
-            showInstructions = {showInstructions}
-            toggleShowInstructions = {toggleShowInstructions}
             selectedPattern = {selectedPattern}
             handlePatternSelect = {handlePatternSelect}
             timeUnitInSeconds = {timeUnitInSeconds}

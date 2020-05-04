@@ -14,6 +14,7 @@ const initialState = {
   soundOnChange: false,
   vibrateOnCount: false,
   vibrateOnChange: false,
+  showInstructions: true,
 }
 
 const optionsReducer = (state, action: Action) => {
@@ -40,6 +41,12 @@ const optionsReducer = (state, action: Action) => {
       return {
         ...state,
         vibrateOnChange: !state.vibrateOnChange,
+      }
+    }
+    case actions.TOGGLE_SHOW_INSTRUCTIONS: {
+      return {
+        ...state,
+        showInstructions: !state.showInstructions,
       }
     }
     default: {

@@ -7,7 +7,7 @@ import DisplayOptions from 'components/DisplayOptions';
 import PatternOptions from 'components/PatternOptions';
 import SoundOptions from 'components/SoundOptions';
 import SpeedOptions from 'components/SpeedOptions';
-import Pattern from 'utils/flow-types';
+import { Pattern } from 'utils/flow-types';
 
 const useStyles = makeStyles(() => ({
   popoverStyle: {
@@ -25,8 +25,6 @@ type Props = {
   popoverAnchorRef: ElementRef,
   timeUnitInSeconds: number,
   setTimeUnitInSeconds: Function,
-  showInstructions: boolean,
-  toggleShowInstructions: Function,
   selectedPattern: Pattern,
   handlePatternSelect: Function,
 };
@@ -36,8 +34,6 @@ const AppOptions = (props: Props) => {
     navValue,
     closeAllDrawers,
     popoverAnchorRef,
-    showInstructions,
-    toggleShowInstructions,
     selectedPattern,
     handlePatternSelect,
     timeUnitInSeconds,
@@ -106,10 +102,7 @@ const AppOptions = (props: Props) => {
         className={classes.popoverStyle}
         data-testid="popover_display"
       >
-        <DisplayOptions
-          showInstructions = {showInstructions}
-          toggleShowInstructions = {toggleShowInstructions}
-        />
+        <DisplayOptions />
       </Popover>
       <Popover
         anchor="bottom"

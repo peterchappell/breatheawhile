@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, cleanup, screen } from 'utils/test-utils';
 
+import { OptionsProvider } from "context/OptionsContext";
 import AppOptions from './index';
 
 describe('AppOptions', () => {
@@ -20,7 +21,11 @@ describe('AppOptions', () => {
 
   it('shows the an options panel that matches the navValue prop', () => {
     const ref = { current: document.createElement('div') }
-    render(<AppOptions navValue="display" popoverAnchorRef={ref} />);
+    render(
+      <OptionsProvider>
+        <AppOptions navValue="display" popoverAnchorRef={ref} />
+      </OptionsProvider>
+    );
     expect(screen.queryByTestId('popover_display')).toBeTruthy();
     expect(screen.queryByTestId('popover_', { exact: false })).toBeTruthy();
   });
