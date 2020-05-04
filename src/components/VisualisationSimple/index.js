@@ -10,8 +10,8 @@ const radius = 130;
 export const circumference = radius * 2 * Math.PI;
 
 type Props = {
-  currentPhase?: number,
-  progress?: number,
+  currentPhase: string,
+  progress: number,
 };
 
 const VisualisationSimple = (props: Props) => {
@@ -65,7 +65,7 @@ const VisualisationSimple = (props: Props) => {
 };
 
 VisualisationSimple.defaultProps = {
-  currentPhase: 0,
+  currentPhase: 'in',
   progress: 0,
 };
 

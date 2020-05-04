@@ -8,7 +8,7 @@ import VisualisationSimple from 'components/VisualisationSimple';
 import { useOptionsState } from 'context/OptionsContext';
 import useInterval from 'hooks/useInterval';
 import { usePageVisibility } from 'hooks/visibility';
-import Pattern from 'utils/flow-types';
+import type { Pattern } from 'utils/flow/flow-types';
 
 const audioContext = new window.AudioContext();
 

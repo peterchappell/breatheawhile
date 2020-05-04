@@ -1,4 +1,6 @@
-import React, { ElementRef } from 'react';
+// @flow
+import React from 'react';
+import type { ElementRef } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
@@ -7,7 +9,7 @@ import DisplayOptions from 'components/DisplayOptions';
 import PatternOptions from 'components/PatternOptions';
 import SoundOptions from 'components/SoundOptions';
 import SpeedOptions from 'components/SpeedOptions';
-import { Pattern } from 'utils/flow-types';
+import type { Pattern } from 'utils/flow/flow-types';
 
 const useStyles = makeStyles(() => ({
   popoverStyle: {

@@ -1,13 +1,25 @@
 // @flow
-import React, { useReducer, Node as ReactNode } from 'react';
+import React, { useReducer } from 'react';
+import type { Node as ReactNode } from 'react';
 import actions from './actions';
 
 type Action = {
-  type: actions.TOGGLE_SOUND_ON_COUNT | actions.TOGGLE_SOUND_ON_CHANGE | actions.TOGGLE_VIBRATE_ON_COUNT | actions.TOGGLE_VIBRATE_ON_CHANGE,
-}
+  type: $Keys<typeof actions>,
+  payload?: Object,
+};
 
-const OptionsStateContext = React.createContext();
-const OptionsDispatchContext = React.createContext();
+type State = {
+  soundOnCount: boolean,
+  soundOnChange: boolean,
+  vibrateOnCount: boolean,
+  vibrateOnChange: boolean,
+  showInstructions: boolean,
+};
+
+type Dispatch = (action: Action) => void;
+
+const OptionsStateContext = React.createContext<State | typeof undefined>(undefined);
+const OptionsDispatchContext = React.createContext<Dispatch | typeof undefined>(undefined, );
 
 const initialState = {
   soundOnCount: false,

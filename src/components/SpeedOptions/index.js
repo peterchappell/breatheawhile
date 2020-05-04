@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const normaliseSliderValue = (value) => {
+export const normaliseSliderValue = (value: number) => {
   if (!value) {
     return 0.5;
   }

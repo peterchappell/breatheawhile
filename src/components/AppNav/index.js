@@ -1,5 +1,6 @@
 // @flow
-import React, { ElementRef } from 'react';
+import React from 'react';
+import type { ElementRef } from 'react';
 
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';

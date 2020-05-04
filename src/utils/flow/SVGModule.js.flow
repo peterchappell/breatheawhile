@@ -1,0 +1,9 @@
+// @flow
+
+type SVGProps = {
+  className: string,
+  style: Object,
+  'data-testid': string,
+}
+
+declare export var ReactComponent: React$ComponentType<SVGProps>;

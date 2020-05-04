@@ -11,7 +11,7 @@ import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import Typography from '@material-ui/core/Typography';
 
 import breathingPatterns from 'utils/breathingPatterns';
-import Pattern from 'utils/flow-types';
+import type { Pattern } from 'utils/flow/flow-types';
 
 type Props = {
   selectedPattern: Pattern,
