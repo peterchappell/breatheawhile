@@ -2,38 +2,26 @@
 import React, { useReducer } from 'react';
 import type { Node as ReactNode } from 'react';
 import actions from './actions';
+import initialState from './initialState';
+import type { State } from './initialState';
 
-export type SetSecondsPerCountPayload = {
+type SetSecondsPerCountPayload = {
   secondsPerCount: number,
+}
+
+type SetPatternPayload = {
+  pattern: Object,
 }
 
 type Action = {
   type: $Keys<typeof actions>,
-  payload?: SetSecondsPerCountPayload | void,
-};
-
-type State = {
-  soundOnCount: boolean,
-  soundOnChange: boolean,
-  vibrateOnCount: boolean,
-  vibrateOnChange: boolean,
-  showInstructions: boolean,
-  secondsPerCount: number,
+  payload?: SetSecondsPerCountPayload | SetPatternPayload |void,
 };
 
 type Dispatch = (action: Action) => void;
 
 const OptionsStateContext = React.createContext<State | typeof undefined>(undefined);
 const OptionsDispatchContext = React.createContext<Dispatch | typeof undefined>(undefined, );
-
-const initialState = {
-  soundOnCount: false,
-  soundOnChange: false,
-  vibrateOnCount: false,
-  vibrateOnChange: false,
-  showInstructions: true,
-  secondsPerCount: 1,
-}
 
 const optionsReducer = (state, action: Action) => {
   switch (action.type) {
@@ -73,6 +61,14 @@ const optionsReducer = (state, action: Action) => {
       return {
         ...state,
         secondsPerCount: newSecondsPerCount,
+      }
+    }
+    case actions.SET_PATTERN: {
+      // $FlowFixMe
+      const newPattern = action.payload.pattern;
+      return {
+        ...state,
+        currentPattern: newPattern,
       }
     }
     default: {

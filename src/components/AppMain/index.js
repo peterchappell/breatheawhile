@@ -8,7 +8,6 @@ import VisualisationSimple from 'components/VisualisationSimple';
 import { useOptionsState } from 'context/OptionsContext';
 import useInterval from 'hooks/useInterval';
 import { usePageVisibility } from 'hooks/visibility';
-import type { Pattern } from 'utils/flow/flow-types';
 
 const audioContext = new window.AudioContext();
 
@@ -18,15 +17,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-type Props = {
-  pattern: Pattern,
-};
-
-const AppMain = (props: Props) => {
-  const {
-    pattern,
-  } = props;
-
+const AppMain = () => {
   const classes = useStyles();
 
   const {
@@ -36,6 +27,7 @@ const AppMain = (props: Props) => {
     soundOnChange,
     showInstructions,
     secondsPerCount,
+    currentPattern,
   } = useOptionsState();
 
   const [timeAccumulator, setTimeAccumulator] = useState(0);
@@ -63,22 +55,22 @@ const AppMain = (props: Props) => {
     setPhaseProgress(0);
     setPhaseIndex(0);
     setCurrentCount(0);
-  }, [pattern.id]);
+  }, [currentPattern.id]);
 
   useEffect(() => {
     setTickTimeInSeconds(tickDivider.current * secondsPerCount);
   }, [secondsPerCount]);
 
   useInterval(() => {
-    if (!pattern.phases[phaseIndex]) {
+    if (!currentPattern.phases[phaseIndex]) {
       return;
     }
 
-    const totalPhaseTime = pattern.phases[phaseIndex].units * secondsPerCount;
+    const totalPhaseTime = currentPattern.phases[phaseIndex].units * secondsPerCount;
 
     if (timeAccumulator <= totalPhaseTime) {      
       setTimeAccumulator(() => timeAccumulator + tickTimeInSeconds);
-      if (timeAccumulator >= currentCount * totalPhaseTime/pattern.phases[phaseIndex].units) {
+      if (timeAccumulator >= currentCount * totalPhaseTime/currentPattern.phases[phaseIndex].units) {
         if (isVisible && vibrateOnCount && navigator.vibrate && !(vibrateOnChange && currentCount === 0)) {
           navigator.vibrate(50);
         }
@@ -96,26 +88,26 @@ const AppMain = (props: Props) => {
       if (isVisible && soundOnChange) {
         doBeep(40, 880, 50);
       }
-      if (phaseIndex < pattern.phases.length - 1) {
+      if (phaseIndex < currentPattern.phases.length - 1) {
         setPhaseIndex(phaseIndex + 1);
       } else {
         setPhaseIndex(0);
       }
     }
 
-    setPhaseProgress(timeAccumulator/(pattern.phases[phaseIndex].units * secondsPerCount) * 100);
+    setPhaseProgress(timeAccumulator/(currentPattern.phases[phaseIndex].units * secondsPerCount) * 100);
 
   }, tickTimeInSeconds * 1000);
 
   return (
     <main className={classes.mainContainer}>
-      { pattern.phases[phaseIndex] && (
-        <VisualisationSimple currentPhase={pattern.phases[phaseIndex].name} progress={phaseProgress/100} />
+      { currentPattern.phases[phaseIndex] && (
+        <VisualisationSimple currentPhase={currentPattern.phases[phaseIndex].name} progress={phaseProgress/100} />
       )}
-      { showInstructions && pattern.phases[phaseIndex] && (
+      { showInstructions && currentPattern.phases[phaseIndex] && (
         <TextPrompt
-          currentInstruction={pattern.phases[phaseIndex].instruction}
-          patternName={pattern.name}
+          currentInstruction={currentPattern.phases[phaseIndex].instruction}
+          patternName={currentPattern.name}
           progress={phaseProgress/100}
           count={currentCount}
         />

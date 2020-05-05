@@ -9,8 +9,6 @@ import AppMain from 'components/AppMain';
 import AppNav from 'components/AppNav';
 import AppOptions from 'components/AppOptions';
 
-import breathingPatterns from 'utils/breathingPatterns';
-
 const useStyles = makeStyles(() => ({
   appContainer: {
     display: 'flex',
@@ -23,7 +21,6 @@ const useStyles = makeStyles(() => ({
 
 const App = () => {
   const [navValue, setNavValue] = useState();
-  const [selectedPattern, setSelectedPattern] = useState(breathingPatterns[0]);
   const popoverAnchorRef = useRef();
 
   const classes = useStyles();
@@ -40,25 +37,16 @@ const App = () => {
     }
   };
 
-  const handlePatternSelect = (event, value) => {
-    setSelectedPattern(value);
-    closeAllDrawers();
-  };
-
   return (
     <section className={classes.appContainer}>
       <AppHeader />
       <Container maxWidth="md" component="main">
         <OptionsProvider>
-          <AppMain
-            pattern={selectedPattern}
-          />
+          <AppMain />
           <AppOptions
             navValue = {navValue}
             closeAllDrawers = {closeAllDrawers}
             popoverAnchorRef = {popoverAnchorRef}
-            selectedPattern = {selectedPattern}
-            handlePatternSelect = {handlePatternSelect}
           />
         </OptionsProvider>
       </Container>

@@ -2,37 +2,45 @@ import React from 'react';
 import { render, cleanup, screen, fireEvent } from 'utils/test-utils';
 
 import breathingPatterns from 'utils/breathingPatterns';
+import { OptionsProvider } from "context/OptionsContext";
 import PatternOptions from './index';
 
 describe('PatternOptions', () => {
   afterEach(cleanup);
 
   it('renders', () => {
-    const { asFragment } = render(<PatternOptions />);
+    const { asFragment } = render(
+      <OptionsProvider>
+        <PatternOptions />
+      </OptionsProvider>
+    );
     expect(asFragment).toMatchSnapshot();
   });
 
-  it('renders the list of breathing patterns', () => {
-    render(<PatternOptions />);
+  it('renders the list of breathing patterns with the first one selected by default', () => {
+    render(
+      <OptionsProvider>
+        <PatternOptions />
+      </OptionsProvider>
+    );
     const listItemButtonEls = screen.getAllByRole('button');
     expect(listItemButtonEls.length).toEqual(breathingPatterns.length);
+    expect(listItemButtonEls[0].querySelector('svg[title="Selected"]')).toBeTruthy();
+    expect(listItemButtonEls[1].querySelector('svg[title="Unselected"]')).toBeTruthy();
   });
 
-  it('uses the selectedPattern prop to select the correct pattern in the list', () => {
-    const selectedBreathingPatternIndex = 1;
-    render(<PatternOptions selectedPattern={breathingPatterns[selectedBreathingPatternIndex]} />);
-    const listItemButtonEls = screen.getAllByRole('button');
-    expect(listItemButtonEls[selectedBreathingPatternIndex].classList.contains('Mui-selected')).toEqual(true);
-    expect(listItemButtonEls[0].classList.contains('Mui-selected')).toEqual(false);
-  });
-
-  it('calls the handlePatternSelect function prop when a selection is made', () => {
-    const selectedBreathingPatternIndex = 1;
-    const clickedBreathingPattern = breathingPatterns[0];
+  it('calls the onPatternSelected function prop when a selection is made', () => {
     const mockHandler = jest.fn();
-    render(<PatternOptions selectedPattern={breathingPatterns[selectedBreathingPatternIndex]} handlePatternSelect={mockHandler} />);
-    fireEvent.click(screen.getByText(clickedBreathingPattern.name));
+    render(
+      <OptionsProvider>
+        <PatternOptions onPatternSelected={mockHandler} />
+      </OptionsProvider>
+    );
+    fireEvent.click(screen.getByText(breathingPatterns[1].name));
+    const listItemButtonEls = screen.getAllByRole('button');
+
     expect(mockHandler).toBeCalledTimes(1);
-    expect(mockHandler).toBeCalledWith(expect.any(Object), clickedBreathingPattern);
+    expect(listItemButtonEls[0].querySelector('svg[title="Unselected"]')).toBeTruthy();
+    expect(listItemButtonEls[1].querySelector('svg[title="Selected"]')).toBeTruthy();
   });
 });

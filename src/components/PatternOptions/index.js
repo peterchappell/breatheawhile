@@ -10,19 +10,26 @@ import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import Typography from '@material-ui/core/Typography';
 
+import actions from 'context/actions';
+import { useOptionsState, useOptionsDispatch } from 'context/OptionsContext';
 import breathingPatterns from 'utils/breathingPatterns';
-import type { Pattern } from 'utils/flow/flow-types';
 
 type Props = {
-  selectedPattern: Pattern,
-  handlePatternSelect: Function,
+  onPatternSelected: Function,
 };
 
 const PatternOptions = (props: Props) => {
-  const {
-    selectedPattern,
-    handlePatternSelect,
-  } = props;
+  const { onPatternSelected } = props;
+  const dispatchSettingsChange = useOptionsDispatch();
+  const { currentPattern } = useOptionsState();
+
+  const handleSelectPattern = (event, pattern) => {
+    dispatchSettingsChange({
+      type: actions.SET_PATTERN,
+      payload: { pattern },
+    })
+    onPatternSelected();
+  };
 
   return (
     <Container maxWidth="md">
@@ -35,14 +42,14 @@ const PatternOptions = (props: Props) => {
               key={`${pattern.id}_key`}
               alignItems="flex-start"
               button
-              selected={selectedPattern && selectedPattern.id === pattern.id}
-              onClick={event => handlePatternSelect(event, pattern)}
+              selected={currentPattern && currentPattern.id === pattern.id}
+              onClick={event => handleSelectPattern(event, pattern)}
             >
               <ListItemIcon>
-                { selectedPattern && selectedPattern.id === pattern.id ? (
-                  <RadioButtonCheckedIcon />
+                { currentPattern && currentPattern.id === pattern.id ? (
+                  <RadioButtonCheckedIcon title="Selected" aria-hidden={false} />
                 ) : (
-                  <RadioButtonUncheckedIcon />
+                  <RadioButtonUncheckedIcon title="Unselected" aria-hidden={false} />
                 )}
               </ListItemIcon>
               <ListItemText

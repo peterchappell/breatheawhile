@@ -8,7 +8,6 @@ import DisplayOptions from 'components/DisplayOptions';
 import PatternOptions from 'components/PatternOptions';
 import SoundOptions from 'components/SoundOptions';
 import SpeedOptions from 'components/SpeedOptions';
-import type { Pattern } from 'utils/flow/flow-types';
 
 const useStyles = makeStyles(() => ({
   popoverStyle: {
@@ -24,8 +23,6 @@ type Props = {
   navValue: string,
   closeAllDrawers: Function,
   popoverAnchorRef: any, // should be a React.ElementRef but it's flaky
-  selectedPattern: Pattern,
-  handlePatternSelect: Function,
 };
 
 const AppOptions = (props: Props) => {
@@ -33,8 +30,6 @@ const AppOptions = (props: Props) => {
     navValue,
     closeAllDrawers,
     popoverAnchorRef,
-    selectedPattern,
-    handlePatternSelect,
   } = props;
 
   const classes = useStyles();
@@ -117,10 +112,7 @@ const AppOptions = (props: Props) => {
         className={classes.popoverStyle}
         data-testid="popover_pattern"
       >
-        <PatternOptions
-          selectedPattern={selectedPattern}
-          handlePatternSelect={handlePatternSelect}
-        />
+        <PatternOptions onPatternSelected={closeAllDrawers} />
       </Popover>
     </>
   )
