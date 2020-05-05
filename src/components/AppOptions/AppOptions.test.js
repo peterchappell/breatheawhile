@@ -1,12 +1,10 @@
 import React from 'react';
-import { render, cleanup, screen } from 'utils/test-utils';
+import { render, screen } from 'utils/test-utils';
 
 import { OptionsProvider } from "context/OptionsContext";
 import AppOptions from './index';
 
 describe('AppOptions', () => {
-  afterEach(cleanup);
-
   it('renders', () => {
     const ref = { current: document.createElement('div') }
     const { asFragment } = render(<AppOptions popoverAnchorRef={ref} />);

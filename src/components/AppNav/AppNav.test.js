@@ -1,11 +1,9 @@
 import React from 'react';
-import { render, cleanup, fireEvent, screen } from 'utils/test-utils';
+import { render, fireEvent, screen } from 'utils/test-utils';
 
 import AppNav from './index';
 
 describe('AppHeader', () => {
-  afterEach(cleanup);
-
   it('renders', () => {
     const { asFragment } = render(<AppNav />);
     expect(asFragment).toMatchSnapshot();

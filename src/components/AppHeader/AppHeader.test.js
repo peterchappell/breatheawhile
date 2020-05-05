@@ -1,11 +1,9 @@
 import React from 'react';
-import { render, cleanup } from 'utils/test-utils';
+import { render } from 'utils/test-utils';
 
 import AppHeader from './index';
 
 describe('AppHeader', () => {
-  afterEach(cleanup);
-
   it('renders', () => {
     const { asFragment } = render(<AppHeader />);
     expect(asFragment).toMatchSnapshot();

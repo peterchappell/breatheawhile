@@ -1,12 +1,10 @@
 import React from 'react';
-import { render, cleanup, screen, fireEvent } from 'utils/test-utils';
+import { render, screen, fireEvent } from 'utils/test-utils';
 
 import { OptionsProvider } from "context/OptionsContext";
 import SoundOptions from './index';
 
 describe('SoundOptions', () => {
-  afterEach(cleanup);
-
   it('renders', () => {
     const { asFragment } = render(
       <OptionsProvider>

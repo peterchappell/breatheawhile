@@ -1,12 +1,10 @@
 import React from 'react';
-import { render, cleanup } from 'utils/test-utils';
+import { render } from 'utils/test-utils';
 
 import { OptionsProvider } from "context/OptionsContext";
 import TextPrompt from './index';
 
 describe('TextPrompt', () => {
-  afterEach(cleanup);
-
   it('renders', () => {
     const { asFragment } = render(
       <OptionsProvider>

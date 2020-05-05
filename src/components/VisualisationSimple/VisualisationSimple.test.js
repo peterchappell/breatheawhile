@@ -1,11 +1,9 @@
 import React from 'react';
-import { render, cleanup } from 'utils/test-utils';
+import { render } from 'utils/test-utils';
 
 import VisualisationSimple from './index';
 
 describe('VisualisationSimple', () => {
-  afterEach(cleanup);
-
   it('renders', () => {
     const { asFragment } = render(<VisualisationSimple />);
     expect(asFragment).toMatchSnapshot();

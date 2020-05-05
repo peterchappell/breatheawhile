@@ -1,12 +1,10 @@
 import React from 'react';
-import { render, cleanup, fireEvent } from 'utils/test-utils';
+import { render, fireEvent } from 'utils/test-utils';
 
 import { OptionsProvider } from "context/OptionsContext";
 import DisplayOptions from './index';
 
 describe('DisplayOptions', () => {
-  afterEach(cleanup);
-
   it('renders', () => {
     const { asFragment } = render(
       <OptionsProvider>
