@@ -1,9 +1,19 @@
-export default {
+// @flow
+
+export const actionsNotUsingPayloads = {
   TOGGLE_SOUND_ON_COUNT: 'TOGGLE_SOUND_ON_COUNT',
   TOGGLE_SOUND_ON_CHANGE: 'TOGGLE_SOUND_ON_CHANGE',
   TOGGLE_VIBRATE_ON_COUNT: 'TOGGLE_VIBRATE_ON_COUNT',
   TOGGLE_VIBRATE_ON_CHANGE: 'TOGGLE_VIBRATE_ON_CHANGE',
   TOGGLE_SHOW_INSTRUCTIONS: 'TOGGLE_SHOW_INSTRUCTIONS',
+};
+
+export const actionsUsingPayloads = {
   SET_SECONDS_PER_COUNT: 'SET_SECONDS_PER_COUNT',
   SET_PATTERN: 'SET_PATTERN',
 }
+
+export default {
+  ...actionsNotUsingPayloads,
+  ...actionsUsingPayloads,
+};

@@ -1,3 +1,4 @@
+// @flow
 import breathingPatterns from "utils/breathingPatterns";
 
 export type State = {
@@ -7,7 +8,7 @@ export type State = {
   vibrateOnChange: boolean,
   showInstructions: boolean,
   secondsPerCount: number,
-  currentPattern: object,
+  currentPattern: Object,
 };
 
 const initialState = {

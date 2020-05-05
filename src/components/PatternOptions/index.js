@@ -26,8 +26,8 @@ const PatternOptions = (props: Props) => {
   const handleSelectPattern = (event, pattern) => {
     dispatchSettingsChange({
       type: actions.SET_PATTERN,
-      payload: { pattern },
-    })
+      payload: pattern,
+    });
     onPatternSelected();
   };
 

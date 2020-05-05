@@ -1,22 +1,14 @@
 // @flow
 import React, { useReducer } from 'react';
 import type { Node as ReactNode } from 'react';
-import actions from './actions';
+import actions, { actionsNotUsingPayloads } from './actions';
 import initialState from './initialState';
 import type { State } from './initialState';
 
-type SetSecondsPerCountPayload = {
-  secondsPerCount: number,
-}
-
-type SetPatternPayload = {
-  pattern: Object,
-}
-
-type Action = {
-  type: $Keys<typeof actions>,
-  payload?: SetSecondsPerCountPayload | SetPatternPayload |void,
-};
+type Action =
+  | { type: $Keys<typeof actionsNotUsingPayloads> }
+  | { type: "SET_PATTERN", payload: Object }
+  | { type: "SET_SECONDS_PER_COUNT", payload: number };
 
 type Dispatch = (action: Action) => void;
 
@@ -56,19 +48,15 @@ const optionsReducer = (state, action: Action) => {
       }
     }
     case actions.SET_SECONDS_PER_COUNT: {
-      // $FlowFixMe
-      const newSecondsPerCount = action.payload.secondsPerCount;
       return {
         ...state,
-        secondsPerCount: newSecondsPerCount,
+        secondsPerCount: action.payload,
       }
     }
     case actions.SET_PATTERN: {
-      // $FlowFixMe
-      const newPattern = action.payload.pattern;
       return {
         ...state,
-        currentPattern: newPattern,
+        currentPattern: action.payload,
       }
     }
     default: {

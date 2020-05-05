@@ -28,9 +28,7 @@ const SpeedOptions = () => {
   const changeTimeUnit = (event, value) => {
     dispatchSettingsChange({
       type: actions.SET_SECONDS_PER_COUNT,
-      payload: {
-        secondsPerCount: normaliseSliderValue(value),
-      }
+      payload: normaliseSliderValue(value),
     });
   };
 
