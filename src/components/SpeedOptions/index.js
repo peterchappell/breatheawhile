@@ -3,8 +3,10 @@ import React  from 'react';
 
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
-
 import { makeStyles } from '@material-ui/core/styles';
+
+import actions from 'context/actions';
+import { useOptionsState, useOptionsDispatch } from 'context/OptionsContext';
 
 const useStyles = makeStyles((theme) => ({
   sliderContainer: {
@@ -13,25 +15,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const normaliseSliderValue = (value: number) => {
-  if (!value) {
-    return 0.5;
+  if (typeof value === 'undefined') {
+    return 1;
   }
   return 1 - value + 0.5;
 };
 
-type Props = {
-  setTimeUnitInSeconds: Function,
-  timeUnitInSeconds: number,
-}
-
-const SpeedOptions = (props: Props) => {
-  const { 
-    setTimeUnitInSeconds,
-    timeUnitInSeconds, 
-  } = props;
+const SpeedOptions = () => {
+  const { secondsPerCount } = useOptionsState();
+  const dispatchSettingsChange = useOptionsDispatch();
 
   const changeTimeUnit = (event, value) => {
-    setTimeUnitInSeconds(normaliseSliderValue(value));
+    dispatchSettingsChange({
+      type: actions.SET_SECONDS_PER_COUNT,
+      payload: {
+        secondsPerCount: normaliseSliderValue(value),
+      }
+    });
   };
 
   const classes = useStyles();
@@ -40,15 +40,15 @@ const SpeedOptions = (props: Props) => {
     <div className={classes.sliderContainer}>
       <Typography id="speed-slider">
         {
-          timeUnitInSeconds === 1 ? (
-            `Count every ${timeUnitInSeconds.toFixed(2)} second`
+          secondsPerCount === 1 ? (
+            `Count every ${secondsPerCount.toFixed(2)} second`
           ) : (
-            `Count every ${timeUnitInSeconds.toFixed(2)} seconds`
+            `Count every ${secondsPerCount.toFixed(2)} seconds`
           )
         }
       </Typography>
       <Slider
-        value={normaliseSliderValue(timeUnitInSeconds)}
+        defaultValue={0.5}
         min={0}
         max={1}
         step={0.01}

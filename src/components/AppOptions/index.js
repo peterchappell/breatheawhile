@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import type { ElementRef } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
@@ -24,9 +23,7 @@ const useStyles = makeStyles(() => ({
 type Props = {
   navValue: string,
   closeAllDrawers: Function,
-  popoverAnchorRef: ElementRef,
-  timeUnitInSeconds: number,
-  setTimeUnitInSeconds: Function,
+  popoverAnchorRef: any, // should be a React.ElementRef but it's flaky
   selectedPattern: Pattern,
   handlePatternSelect: Function,
 };
@@ -38,8 +35,6 @@ const AppOptions = (props: Props) => {
     popoverAnchorRef,
     selectedPattern,
     handlePatternSelect,
-    timeUnitInSeconds,
-    setTimeUnitInSeconds,
   } = props;
 
   const classes = useStyles();
@@ -83,10 +78,7 @@ const AppOptions = (props: Props) => {
         className={classes.popoverStyle}
         data-testid="popover_speed"
       >
-        <SpeedOptions
-          setTimeUnitInSeconds={setTimeUnitInSeconds}
-          timeUnitInSeconds={timeUnitInSeconds}
-        />
+        <SpeedOptions />
       </Popover>
       <Popover
         anchor="bottom"

@@ -23,7 +23,6 @@ const useStyles = makeStyles(() => ({
 
 const App = () => {
   const [navValue, setNavValue] = useState();
-  const [timeUnitInSeconds, setTimeUnitInSeconds] = useState(1);
   const [selectedPattern, setSelectedPattern] = useState(breathingPatterns[0]);
   const popoverAnchorRef = useRef();
 
@@ -52,7 +51,6 @@ const App = () => {
       <Container maxWidth="md" component="main">
         <OptionsProvider>
           <AppMain
-            timeUnitInSeconds={timeUnitInSeconds}
             pattern={selectedPattern}
           />
           <AppOptions
@@ -61,8 +59,6 @@ const App = () => {
             popoverAnchorRef = {popoverAnchorRef}
             selectedPattern = {selectedPattern}
             handlePatternSelect = {handlePatternSelect}
-            timeUnitInSeconds = {timeUnitInSeconds}
-            setTimeUnitInSeconds = {setTimeUnitInSeconds}
           />
         </OptionsProvider>
       </Container>

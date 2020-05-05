@@ -3,9 +3,13 @@ import React, { useReducer } from 'react';
 import type { Node as ReactNode } from 'react';
 import actions from './actions';
 
+export type SetSecondsPerCountPayload = {
+  secondsPerCount: number,
+}
+
 type Action = {
   type: $Keys<typeof actions>,
-  payload?: Object,
+  payload?: SetSecondsPerCountPayload | void,
 };
 
 type State = {
@@ -14,6 +18,7 @@ type State = {
   vibrateOnCount: boolean,
   vibrateOnChange: boolean,
   showInstructions: boolean,
+  secondsPerCount: number,
 };
 
 type Dispatch = (action: Action) => void;
@@ -27,6 +32,7 @@ const initialState = {
   vibrateOnCount: false,
   vibrateOnChange: false,
   showInstructions: true,
+  secondsPerCount: 1,
 }
 
 const optionsReducer = (state, action: Action) => {
@@ -59,6 +65,14 @@ const optionsReducer = (state, action: Action) => {
       return {
         ...state,
         showInstructions: !state.showInstructions,
+      }
+    }
+    case actions.SET_SECONDS_PER_COUNT: {
+      // $FlowFixMe
+      const newSecondsPerCount = action.payload.secondsPerCount;
+      return {
+        ...state,
+        secondsPerCount: newSecondsPerCount,
       }
     }
     default: {

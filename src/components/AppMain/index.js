@@ -19,13 +19,11 @@ const useStyles = makeStyles(() => ({
 }));
 
 type Props = {
-  timeUnitInSeconds: number,
   pattern: Pattern,
 };
 
 const AppMain = (props: Props) => {
   const {
-    timeUnitInSeconds,
     pattern,
   } = props;
 
@@ -37,6 +35,7 @@ const AppMain = (props: Props) => {
     vibrateOnChange,
     soundOnChange,
     showInstructions,
+    secondsPerCount,
   } = useOptionsState();
 
   const [timeAccumulator, setTimeAccumulator] = useState(0);
@@ -44,7 +43,7 @@ const AppMain = (props: Props) => {
   const [phaseIndex, setPhaseIndex] = useState(0);
   const [currentCount, setCurrentCount] = useState(0);
   const tickDivider = useRef(0.02);
-  const [tickTimeInSeconds, setTickTimeInSeconds] = useState(tickDivider.current * timeUnitInSeconds);
+  const [tickTimeInSeconds, setTickTimeInSeconds] = useState(tickDivider.current * secondsPerCount);
   const isVisible = usePageVisibility();
 
   const doBeep = (vol, freq, duration) => {
@@ -67,15 +66,15 @@ const AppMain = (props: Props) => {
   }, [pattern.id]);
 
   useEffect(() => {
-    setTickTimeInSeconds(tickDivider.current * timeUnitInSeconds);
-  }, [timeUnitInSeconds]);
+    setTickTimeInSeconds(tickDivider.current * secondsPerCount);
+  }, [secondsPerCount]);
 
   useInterval(() => {
     if (!pattern.phases[phaseIndex]) {
       return;
     }
 
-    const totalPhaseTime = pattern.phases[phaseIndex].units * timeUnitInSeconds;
+    const totalPhaseTime = pattern.phases[phaseIndex].units * secondsPerCount;
 
     if (timeAccumulator <= totalPhaseTime) {      
       setTimeAccumulator(() => timeAccumulator + tickTimeInSeconds);
@@ -104,7 +103,7 @@ const AppMain = (props: Props) => {
       }
     }
 
-    setPhaseProgress(timeAccumulator/(pattern.phases[phaseIndex].units * timeUnitInSeconds) * 100);
+    setPhaseProgress(timeAccumulator/(pattern.phases[phaseIndex].units * secondsPerCount) * 100);
 
   }, tickTimeInSeconds * 1000);
 
