@@ -8,6 +8,7 @@ import AppHeader from 'components/AppHeader';
 import AppMain from 'components/AppMain';
 import AppNav from 'components/AppNav';
 import AppOptions from 'components/AppOptions';
+import ServiceWorkerManager from 'components/ServiceWorkerManager';
 
 const useStyles = makeStyles(() => ({
   appContainer: {
@@ -55,6 +56,7 @@ const App = () => {
         handleNavChange = {handleNavChange}
         popoverAnchorRef = {popoverAnchorRef}
       />
+      <ServiceWorkerManager />
     </section>
   );
 };
