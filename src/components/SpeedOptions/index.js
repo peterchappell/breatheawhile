@@ -12,6 +12,31 @@ const useStyles = makeStyles((theme) => ({
   sliderContainer: {
     padding: theme.spacing(3),
   },
+  root: {
+    color: theme.palette.secondary.main,
+    marginTop: theme.spacing(2),
+  },
+  thumb: {
+    height: 18,
+    width: 18,
+    backgroundColor: theme.palette.secondary.main,
+    marginTop: -8,
+    marginLeft: -12,
+    '&:focus, &:hover, &$active': {
+      boxShadow: 'inherit',
+    },
+  },
+  track: {
+    height: 4,
+    borderRadius: 2,
+  },
+  rail: {
+    height: 4,
+    borderRadius: 2,
+  },
+  active: {
+    color: theme.palette.secondary.dark,
+  }
 }));
 
 export const normaliseSliderValue = (value: number) => {
@@ -52,7 +77,13 @@ const SpeedOptions = () => {
         step={0.01}
         track={false}
         onChange={changeTimeUnit}
-        className={classes.speedControl}
+        classes={{
+          root: classes.root,
+          thumb: classes.thumb,
+          track: classes.track,
+          rail: classes.rail,
+          active: classes.active,
+        }}
         aria-labelledby="speed-slider" />
     </div>
   )

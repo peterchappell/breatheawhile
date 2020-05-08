@@ -1,6 +1,8 @@
 // @flow
 import React from 'react';
 
+import { useTheme } from '@material-ui/core/styles';
+
 import useVisualisationStyles from './useVisualisationStyles';
 import { ReactComponent as InVisual } from './in.svg';
 import { ReactComponent as OutVisual } from './out.svg';
@@ -21,6 +23,7 @@ const VisualisationSimple = (props: Props) => {
   } = props;
 
   const classes = useVisualisationStyles();
+  const theme = useTheme();
 
   return (
     <div className={classes.container}>
@@ -47,7 +50,7 @@ const VisualisationSimple = (props: Props) => {
           cx="140"
           cy="140"
           r={radius}
-          stroke={currentPhase === 'pause' ? '#236385' : '#333'}
+          stroke={currentPhase === 'pause' ? theme.palette.primary.light : theme.palette.darkBackground.dark}
         />
         <circle
           className={classes.progress}
@@ -56,7 +59,7 @@ const VisualisationSimple = (props: Props) => {
           r={radius}
           strokeDasharray={`${circumference} ${circumference}`}
           strokeDashoffset={circumference - progress * circumference}
-          stroke={currentPhase === 'pause' ? '#333' : '#236385'}
+          stroke={currentPhase === 'pause' ? theme.palette.darkBackground.dark : theme.palette.primary.light}
         />
         <p>${circumference} : ${progress}</p>
       </svg>

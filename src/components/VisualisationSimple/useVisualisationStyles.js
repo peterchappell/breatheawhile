@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useVisualisationStyles = makeStyles(() => ({
+const useVisualisationStyles = makeStyles((theme) => ({
   container: {
     position: 'relative'
   },
@@ -23,7 +23,7 @@ const useVisualisationStyles = makeStyles(() => ({
     width: '100px'
   },
   phaseInstruction: {
-    color: '#f5f5f5',
+    color: theme.palette.action.selected,
     fontSize: '18px',
     marginTop: '20px',
     textAlign: 'center'

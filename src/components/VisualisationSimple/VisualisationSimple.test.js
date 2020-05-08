@@ -14,10 +14,12 @@ describe('VisualisationSimple', () => {
     expect(getByTestId('in_visual').style.display).toEqual('block');
     expect(getByTestId('out_visual').style.display).toEqual('none');
     expect(getByTestId('pause_visual').style.display).toEqual('none');
+
     rerender(<VisualisationSimple currentPhase="out" />);
     expect(getByTestId('in_visual').style.display).toEqual('none');
     expect(getByTestId('out_visual').style.display).toEqual('block');
     expect(getByTestId('pause_visual').style.display).toEqual('none');
+
     rerender(<VisualisationSimple currentPhase="pause" />);
     expect(getByTestId('in_visual').style.display).toEqual('none');
     expect(getByTestId('out_visual').style.display).toEqual('none');

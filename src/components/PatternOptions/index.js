@@ -47,7 +47,7 @@ const PatternOptions = (props: Props) => {
             >
               <ListItemIcon>
                 { currentPattern && currentPattern.id === pattern.id ? (
-                  <RadioButtonCheckedIcon title="Selected" aria-hidden={false} />
+                  <RadioButtonCheckedIcon title="Selected" aria-hidden={false} color="secondary" />
                 ) : (
                   <RadioButtonUncheckedIcon title="Unselected" aria-hidden={false} />
                 )}
