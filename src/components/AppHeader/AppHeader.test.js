@@ -11,6 +11,6 @@ describe('AppHeader', () => {
 
   it('contains a h1 with the app name', () => {
     const { container } = render(<AppHeader />);
-    expect(container.querySelector('h1').textContent).toEqual('Breathonome');
+    expect(container.querySelector('h1').textContent).toEqual('Breatheawhile');
   });
 });
