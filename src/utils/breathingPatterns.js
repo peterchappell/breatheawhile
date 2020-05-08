@@ -2,7 +2,7 @@ export default [
   {
     id: 'square_breathing',
     name: 'Square Breathing',
-    description: 'A simple breathing exercise you can practice to reduce stress.',
+    description: 'Breathe in for 4, hold for 4, breathe out for 4, hold for 4.',
     phases: [
       {
         name: 'in',
@@ -29,7 +29,7 @@ export default [
   {
     id: '4-7-8_breathing',
     name: '4-7-8 Breathing',
-    description: 'A breathing technique that is particularly good for sleep and for increasing oxygen intake.',
+    description: 'Breathe in through the nose for 4, hold for 7, breathe out for 8 with a "whoosh".',
     phases: [
       {
         name: 'in',
@@ -45,6 +45,40 @@ export default [
         name: 'out',
         units: 8,
         instruction: 'Exhale with a WHOOSH',
+      }
+    ]
+  },
+  {
+    id: 'equal_breathing',
+    name: 'Equal Breathing',
+    description: 'Breathe in for 5, breathe out for 5.',
+    phases: [
+      {
+        name: 'in',
+        units: 5,
+        instruction: 'Breathe in',
+      },
+      {
+        name: 'out',
+        units: 5,
+        instruction: 'Breath out',
+      }
+    ]
+  },
+  {
+    id: '7-11_breathing',
+    name: '7-11 Breathing',
+    description: 'Breathe in for 7, breathe out for 11.',
+    phases: [
+      {
+        name: 'in',
+        units: 7,
+        instruction: 'Breathe in',
+      },
+      {
+        name: 'out',
+        units: 11,
+        instruction: 'Breath out',
       }
     ]
   }

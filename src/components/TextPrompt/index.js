@@ -50,6 +50,7 @@ const TextPrompt = (props: Props) => {
       <div className={`${classes.phaseInstructions} ${progress >= 0.9 ? classes.fadeOut : classes.fadeIn}`}>
         <Typography variant="h6">
           {currentInstruction}
+          {' '}
           <span className={classes.phaseCount}>
             {(count > 1) ? count : '…'}
           </span>
