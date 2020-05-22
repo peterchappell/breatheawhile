@@ -9,13 +9,16 @@ import PatternOptions from 'components/PatternOptions';
 import SoundOptions from 'components/SoundOptions';
 import SpeedOptions from 'components/SpeedOptions';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   popoverStyle: {
     transform: `translateY(-20px)`,
     marginBottom: '56px',
   },
   fullWidthPopover: {
     width: '100%',
+    [theme.breakpoints.up('md')]: {
+      maxWidth: '700px',
+    }
   },
 }));
 

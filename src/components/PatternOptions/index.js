@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -18,10 +19,18 @@ type Props = {
   onPatternSelected: Function,
 };
 
+const useStyles = makeStyles((theme) => ({
+  listContainer: {
+    padding: [[theme.spacing(3), 0]],
+  },
+}));
+
 const PatternOptions = (props: Props) => {
   const { onPatternSelected } = props;
   const dispatchSettingsChange = useOptionsDispatch();
   const { currentPattern } = useOptionsState();
+
+  const classes = useStyles();
 
   const handleSelectPattern = (event, pattern) => {
     dispatchSettingsChange({
@@ -33,7 +42,7 @@ const PatternOptions = (props: Props) => {
 
   return (
     <Container maxWidth="md">
-      <List component="div">
+      <List component="div" className={classes.listContainer}>
         {breathingPatterns.map((pattern) => {
           const labelId = `select_${pattern.id}`;
 
