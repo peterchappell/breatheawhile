@@ -2,7 +2,7 @@ export default [
   {
     id: 'square_breathing',
     name: 'Square Breathing',
-    description: 'Breathe in for 4, hold for 4, breathe out for 4, hold for 4.',
+    description: 'Breathe in for 4, hold for 4, breathe out for 4, hold for\u00a04.',
     phases: [
       {
         name: 'in',
@@ -29,7 +29,7 @@ export default [
   {
     id: '4-7-8_breathing',
     name: '4-7-8 Breathing',
-    description: 'Breathe in through the nose for 4, hold for 7, breathe out for 8 with a "whoosh".',
+    description: 'Breathe in through the nose for 4, hold for 7, breathe out for 8 with a\u00a0"whoosh".',
     phases: [
       {
         name: 'in',
@@ -51,7 +51,7 @@ export default [
   {
     id: 'equal_breathing',
     name: 'Equal Breathing',
-    description: 'Breathe in for 5, breathe out for 5.',
+    description: 'Breathe in for 5, breathe out for\u00a05.',
     phases: [
       {
         name: 'in',
@@ -68,7 +68,7 @@ export default [
   {
     id: '7-11_breathing',
     name: '7-11 Breathing',
-    description: 'Breathe in for 7, breathe out for 11.',
+    description: 'Breathe in for 7, breathe out for\u00a011.',
     phases: [
       {
         name: 'in',
