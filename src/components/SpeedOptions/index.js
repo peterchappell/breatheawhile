@@ -1,6 +1,7 @@
 // @flow
 import React  from 'react';
 
+import Button from '@material-ui/core/Button';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -36,7 +37,12 @@ const useStyles = makeStyles((theme) => ({
   },
   active: {
     color: theme.palette.secondary.dark,
-  }
+  },
+  sliderGrid: {
+    justifyContent: 'space-between',
+    display: 'flex',
+    margin: [[-theme.spacing(1), -theme.spacing(1), 0, -theme.spacing(1)]],
+  },
 }));
 
 export const normaliseSliderValue = (value: number) => {
@@ -57,21 +63,33 @@ const SpeedOptions = () => {
     });
   };
 
+  const onSlowDown = () => {
+    if (secondsPerCount < 1.5) {
+      dispatchSettingsChange({
+        type: actions.SET_SECONDS_PER_COUNT,
+        payload: secondsPerCount + 0.01,
+      });
+    }
+  };
+
+  const onSpeedUp = () => {
+    if (secondsPerCount > 0.5) {
+      dispatchSettingsChange({
+        type: actions.SET_SECONDS_PER_COUNT,
+        payload: secondsPerCount - 0.01,
+      });
+    }
+  };
+
   const classes = useStyles();
 
   return (
     <div className={classes.sliderContainer}>
       <Typography id="speed-slider">
-        {
-          secondsPerCount === 1 ? (
-            `Count every ${secondsPerCount.toFixed(2)} second`
-          ) : (
-            `Count every ${secondsPerCount.toFixed(2)} seconds`
-          )
-        }
+        Adjust the count speed
       </Typography>
       <Slider
-        defaultValue={0.5}
+        value={normaliseSliderValue(secondsPerCount)}
         min={0}
         max={1}
         step={0.01}
@@ -85,6 +103,14 @@ const SpeedOptions = () => {
           active: classes.active,
         }}
         aria-labelledby="speed-slider" />
+      <div className={classes.sliderGrid}>
+        <Button onClick={onSlowDown}>
+          Slower
+        </Button>
+        <Button onClick={onSpeedUp}>
+          Faster
+        </Button>
+      </div>
     </div>
   )
 };
