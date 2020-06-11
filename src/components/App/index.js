@@ -9,6 +9,7 @@ import AppMain from 'components/AppMain';
 import AppNav from 'components/AppNav';
 import AppOptions from 'components/AppOptions';
 import ServiceWorkerManager from 'components/ServiceWorkerManager';
+import InfoPanel from "components/InfoPanel";
 
 const useStyles = makeStyles(() => ({
   appContainer: {
@@ -22,6 +23,8 @@ const useStyles = makeStyles(() => ({
 
 const App = () => {
   const [navValue, setNavValue] = useState();
+  const [isInfoOpen, setIsInfoOpen] = useState(false);
+
   const popoverAnchorRef = useRef();
 
   const theme = createMuiTheme({
@@ -41,6 +44,14 @@ const App = () => {
   });
   const classes = useStyles();
 
+  const openInfo = () => {
+    setIsInfoOpen(true);
+  };
+
+  const closeInfo = () => {
+    setIsInfoOpen(false);
+  };
+
   const closeAllDrawers = () => {
     setNavValue('');
   };
@@ -56,7 +67,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <section className={classes.appContainer}>
-        <AppHeader />
+        <AppHeader infoButtonHandler={openInfo} />
         <Container maxWidth="md" component="main">
           <OptionsProvider>
             <AppMain />
@@ -72,6 +83,7 @@ const App = () => {
           handleNavChange = {handleNavChange}
           popoverAnchorRef = {popoverAnchorRef}
         />
+        <InfoPanel isOpen={isInfoOpen} closeHandler={closeInfo} />
         <ServiceWorkerManager />
       </section>
     </ThemeProvider>

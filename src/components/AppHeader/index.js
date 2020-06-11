@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,7 +7,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-import InfoPanel from 'components/InfoPanel';
+type Props = {
+  infoButtonHandler: Function,
+};
 
 const useStyles = makeStyles(() => ({
   siteName: {
@@ -18,17 +20,9 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const AppHeader = () => {
+const AppHeader = (props: Props) => {
+  const { infoButtonHandler } = props;
   const classes = useStyles();
-  const [isInfoOpen, setIsInfoOpen] = useState(false);
-
-  const openInfo = () => {
-    setIsInfoOpen(true);
-  };
-
-  const closeInfo = () => {
-    setIsInfoOpen(false);
-  };
 
   return (
     <AppBar position="static" component="header">
@@ -37,12 +31,11 @@ const AppHeader = () => {
           Breatheawhile
         </Typography>
         <div>
-          <IconButton edge="end" color="inherit" aria-label="information" onClick={openInfo}>
+          <IconButton edge="end" color="inherit" aria-label="information" onClick={infoButtonHandler}>
             <InfoIcon />
           </IconButton>
         </div>
       </Toolbar>
-      <InfoPanel isOpen={isInfoOpen} closeHandler={closeInfo} />
     </AppBar>
   )
 };
