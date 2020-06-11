@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button";
@@ -18,10 +18,23 @@ type Props = {
   closeHandler: Function,
 };
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   dialogContent: {
     margin: '0 auto',
     maxWidth: '700px',
+    [theme.breakpoints.up('md')]: {
+      marginTop: theme.spacing(5),
+    }
+  },
+  installContainer: {
+    alignItems: 'center',
+    backgroundColor: theme.palette.grey["100"],
+    display: 'flex',
+    justifyContent: 'space-between',
+    margin: [[theme.spacing(2)*-1, theme.spacing(3)*-1, theme.spacing(3), theme.spacing(3)*-1]],
+  },
+  installContainerCell: {
+    padding: theme.spacing(3),
   },
 }));
 
@@ -36,6 +49,18 @@ const InfoPanel = (props: Props) => {
     closeHandler,
   } = props;
   const classes = useStyles();
+  const [installPromptEvent, setInstallPromptEvent] = useState();
+  const [isInstallStarted, setIsInstallStarted] = useState(false);
+
+  const handleInstall = () => {
+    installPromptEvent.prompt();
+    setIsInstallStarted(true);
+  };
+
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    setInstallPromptEvent(event);
+  });
 
   return (
     <Dialog
@@ -54,6 +79,18 @@ const InfoPanel = (props: Props) => {
       <DialogContent dividers>
         <DialogContentText component="div">
           <div className={classes.dialogContent}>
+            { (installPromptEvent && !isInstallStarted) && (
+              <div className={classes.installContainer}>
+                <Typography variant="subtitle2" component="p" className={classes.installContainerCell}>
+                  Access Breatheawhile more easily with our FREE&nbsp;APP!
+                </Typography>
+                <div className={classes.installContainerCell}>
+                  <Button variant="contained" color="primary" size="small" onClick={handleInstall}>
+                    Install
+                  </Button>
+                </div>
+              </div>
+            )}
             <Typography variant="body1" component="p" gutterBottom>
               Breathing exercises can help with relaxation and stress relief.
             </Typography>

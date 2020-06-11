@@ -83,7 +83,10 @@ const App = () => {
           handleNavChange = {handleNavChange}
           popoverAnchorRef = {popoverAnchorRef}
         />
-        <InfoPanel isOpen={isInfoOpen} closeHandler={closeInfo} />
+        <InfoPanel
+          isOpen={isInfoOpen}
+          closeHandler={closeInfo}
+        />
         <ServiceWorkerManager />
       </section>
     </ThemeProvider>
