@@ -25,7 +25,6 @@ const useStyles = makeStyles(() => ({
 const App = () => {
   const [navValue, setNavValue] = useState();
   const [isInfoOpen, setIsInfoOpen] = useState(false);
-  const useEffectOnMount = (mountFunction) => useEffect(mountFunction, []);
   const history = useHistory();
   const location = useLocation();
   const popoverAnchorRef = useRef();
@@ -73,14 +72,16 @@ const App = () => {
     history.push(newNavValue);
   };
 
-  useEffectOnMount(() => {
-    const initialPathName = location.pathname.slice(1);
-    if (initialPathName === 'info') {
+  useEffect(() => {
+    const pathName = location.pathname.slice(1);
+    if (pathName === 'info') {
       setIsInfoOpen(true);
+      setNavValue('');
     } else {
-      setNavValue(initialPathName);
+      setIsInfoOpen(false);
+      setNavValue(pathName);
     }
-  });
+  }, [location.pathname]);
 
   return (
     <ThemeProvider theme={theme}>
