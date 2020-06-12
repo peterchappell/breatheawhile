@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import Container from '@material-ui/core/Container';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { OptionsProvider } from 'context/OptionsContext';
 import AppHeader from 'components/AppHeader';
@@ -24,7 +25,9 @@ const useStyles = makeStyles(() => ({
 const App = () => {
   const [navValue, setNavValue] = useState();
   const [isInfoOpen, setIsInfoOpen] = useState(false);
-
+  const useEffectOnMount = (mountFunction) => useEffect(mountFunction, []);
+  const history = useHistory();
+  const location = useLocation();
   const popoverAnchorRef = useRef();
 
   const theme = createMuiTheme({
@@ -45,24 +48,39 @@ const App = () => {
   const classes = useStyles();
 
   const openInfo = () => {
+    history.push('info');
     setIsInfoOpen(true);
   };
 
   const closeInfo = () => {
+    history.push('');
     setIsInfoOpen(false);
   };
 
   const closeAllDrawers = () => {
     setNavValue('');
+    history.push('');
   };
 
   const handleNavChange = (event, newValue) => {
+    let newNavValue;
     if (newValue !== navValue) {
-      setNavValue(newValue);
+      newNavValue = newValue;
     } else {
-      setNavValue('');
+      newNavValue = '';
     }
+    setNavValue(newNavValue);
+    history.push(newNavValue);
   };
+
+  useEffectOnMount(() => {
+    const initialPathName = location.pathname.slice(1);
+    if (initialPathName === 'info') {
+      setIsInfoOpen(true);
+    } else {
+      setNavValue(initialPathName);
+    }
+  });
 
   return (
     <ThemeProvider theme={theme}>
