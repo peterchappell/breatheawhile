@@ -1,12 +1,16 @@
+/* eslint-disable */
+
 // @flow
 import React from 'react';
 
 import Checkbox from '@material-ui/core/Checkbox';
 import Container from '@material-ui/core/Container';
+import Divider from "@material-ui/core/Divider";
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from '@material-ui/core/FormLabel';
+import Hidden from "@material-ui/core/Hidden";
 
 import actions from 'context/actions';
 import { useOptionsState, useOptionsDispatch } from 'context/OptionsContext';
@@ -33,7 +37,7 @@ const DisplayOptions = () => {
                 onChange={() => dispatchSettingsChange({ type: actions.SET_VISUALISATION, payload: 'simple' })}
               />
             }
-            label="Simple"
+            label="Timer with icons"
           />
         </FormGroup>
         <FormGroup>
@@ -44,10 +48,13 @@ const DisplayOptions = () => {
                 onChange={() => dispatchSettingsChange({ type: actions.SET_VISUALISATION, payload: 'expandingParticles' })}
               />
             }
-            label="Expanding Particles"
+            label="Dreamy bubbles"
           />
         </FormGroup>
       </FormControl>
+      <Hidden smUp>
+        <Divider />
+      </Hidden>
       <FormControl component="fieldset" className={globalClasses.formControl}>
         <FormLabel component="legend">Text</FormLabel>
         <FormGroup>
