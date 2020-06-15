@@ -4,7 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import TextPrompt from 'components/TextPrompt';
 import VisualisationSimple from 'components/VisualisationSimple';
+import VisualisationExpandingParticles from "components/VisualisationExpandingParticles";
 
+import { visualisationsList } from 'context/initialState';
 import { useOptionsState } from 'context/OptionsContext';
 import useInterval from 'hooks/useInterval';
 import { usePageVisibility } from 'hooks/visibility';
@@ -28,6 +30,7 @@ const AppMain = () => {
     showInstructions,
     secondsPerCount,
     currentPattern,
+    currentVisualisation,
   } = useOptionsState();
 
   const [timeAccumulator, setTimeAccumulator] = useState(0);
@@ -103,10 +106,23 @@ const AppMain = () => {
 
   }, tickTimeInSeconds * 1000);
 
+  const visualisation = () => {
+    if (currentVisualisation === visualisationsList.expandingParticles) {
+      return (<VisualisationExpandingParticles
+        currentPhase={currentPattern.phases[phaseIndex].name}
+        progress={phaseProgress/100}
+      />);
+    }
+    return (<VisualisationSimple
+      currentPhase={currentPattern.phases[phaseIndex].name}
+      progress={phaseProgress/100}
+    />);
+  };
+
   return (
     <main className={classes.mainContainer}>
       { currentPattern.phases[phaseIndex] && (
-        <VisualisationSimple currentPhase={currentPattern.phases[phaseIndex].name} progress={phaseProgress/100} />
+        visualisation()
       )}
       { showInstructions && currentPattern.phases[phaseIndex] && (
         <TextPrompt

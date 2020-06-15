@@ -1,6 +1,11 @@
 // @flow
 import breathingPatterns from "utils/breathingPatterns";
 
+export const visualisationsList = {
+  simple: 'simple',
+  expandingParticles: 'expandingParticles',
+};
+
 export type State = {
   soundOnCount: boolean,
   soundOnChange: boolean,
@@ -9,6 +14,7 @@ export type State = {
   showInstructions: boolean,
   secondsPerCount: number,
   currentPattern: Object,
+  currentVisualisation: $Keys<typeof visualisationsList>,
 };
 
 const initialState = {
@@ -19,6 +25,7 @@ const initialState = {
   showInstructions: true,
   secondsPerCount: 1,
   currentPattern: breathingPatterns[0],
+  currentVisualisation: visualisationsList.simple,
 };
 
 export default initialState;

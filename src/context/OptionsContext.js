@@ -59,6 +59,12 @@ const optionsReducer = (state, action: Action) => {
         currentPattern: action.payload,
       }
     }
+    case actions.SET_VISUALISATION: {
+      return {
+        ...state,
+        currentVisualisation: action.payload,
+      }
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`)
     }

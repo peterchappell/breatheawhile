@@ -48,5 +48,8 @@
     "eslint-plugin-testing-library": "^3.0.4",
     "flow-bin": "^0.123.0",
     "jest-environment-jsdom-sixteen": "^1.0.3"
+  },
+  "peerDependencies": {
+    "canvas": "^2.6.1"
   }
 }

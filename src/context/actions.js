@@ -11,6 +11,7 @@ export const actionsNotUsingPayloads = {
 export const actionsUsingPayloads = {
   SET_SECONDS_PER_COUNT: 'SET_SECONDS_PER_COUNT',
   SET_PATTERN: 'SET_PATTERN',
+  SET_VISUALISATION: 'SET_VISUALISATION',
 }
 
 export default {

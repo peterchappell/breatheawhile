@@ -16,12 +16,40 @@ const DisplayOptions = () => {
   const globalClasses = useGlobalStyles();
   const dispatchSettingsChange = useOptionsDispatch();
 
-  const { showInstructions } = useOptionsState();
+  const {
+    showInstructions,
+    currentVisualisation,
+  } = useOptionsState();
 
   return (
     <Container maxWidth="md">
       <FormControl component="fieldset" className={globalClasses.formControl}>
-        <FormLabel component="legend">Display</FormLabel>
+        <FormLabel component="legend">Visualisation</FormLabel>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={currentVisualisation === 'simple'}
+                onChange={() => dispatchSettingsChange({ type: actions.SET_VISUALISATION, payload: 'simple' })}
+              />
+            }
+            label="Simple"
+          />
+        </FormGroup>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={currentVisualisation === 'expandingParticles'}
+                onChange={() => dispatchSettingsChange({ type: actions.SET_VISUALISATION, payload: 'expandingParticles' })}
+              />
+            }
+            label="Expanding Particles"
+          />
+        </FormGroup>
+      </FormControl>
+      <FormControl component="fieldset" className={globalClasses.formControl}>
+        <FormLabel component="legend">Text</FormLabel>
         <FormGroup>
           <FormControlLabel
             control={
