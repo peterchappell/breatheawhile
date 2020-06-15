@@ -1,9 +1,11 @@
 // @flow
 import React  from 'react';
 
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Button from '@material-ui/core/Button';
+import FormLabel from "@material-ui/core/FormLabel";
 import Slider from '@material-ui/core/Slider';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 import actions from 'context/actions';
@@ -85,9 +87,12 @@ const SpeedOptions = () => {
 
   return (
     <div className={classes.sliderContainer}>
-      <Typography id="speed-slider">
+      <FormLabel
+        component="legend"
+        id="speed-slider"
+      >
         Adjust the count speed
-      </Typography>
+      </FormLabel>
       <Slider
         value={normaliseSliderValue(secondsPerCount)}
         min={0}
@@ -104,11 +109,17 @@ const SpeedOptions = () => {
         }}
         aria-labelledby="speed-slider" />
       <div className={classes.sliderGrid}>
-        <Button onClick={onSlowDown}>
-          Slower
+        <Button
+          onClick={onSlowDown}
+          startIcon={<ArrowBackIcon />}
+        >
+          Longer breaths
         </Button>
-        <Button onClick={onSpeedUp}>
-          Faster
+        <Button
+          onClick={onSpeedUp}
+          endIcon={<ArrowForwardIcon />}
+        >
+          Shorter breaths
         </Button>
       </div>
     </div>
