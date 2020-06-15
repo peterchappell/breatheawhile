@@ -39,15 +39,19 @@ const AppMain = () => {
   const isVisible = usePageVisibility();
 
   const doBeep = (vol, freq, duration) => {
+    const fadeInDuration = duration/4;
     const v = audioContext.createOscillator();
     const u = audioContext.createGain();
     v.connect(u);
     v.frequency.value = freq;
     v.type = 'sine';
+    u.gain.setValueAtTime(0, audioContext.currentTime);
+    v.connect(u);
     u.connect(audioContext.destination);
-    u.gain.value = vol*0.01;
     v.start(audioContext.currentTime);
-    v.stop(audioContext.currentTime + duration*0.001);
+    u.gain.exponentialRampToValueAtTime(vol, audioContext.currentTime + fadeInDuration);
+    u.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+    v.stop(audioContext.currentTime + duration + 0.1);
   };
 
   useEffect(() => {
@@ -68,14 +72,16 @@ const AppMain = () => {
 
     const totalPhaseTime = currentPattern.phases[phaseIndex].units * secondsPerCount;
 
-    if (timeAccumulator <= totalPhaseTime) {      
+    setPhaseProgress(timeAccumulator/(currentPattern.phases[phaseIndex].units * secondsPerCount) * 100);
+
+    if (timeAccumulator <= totalPhaseTime) {
       setTimeAccumulator(() => timeAccumulator + tickTimeInSeconds);
       if (timeAccumulator >= currentCount * totalPhaseTime/currentPattern.phases[phaseIndex].units) {
         if (isVisible && vibrateOnCount && navigator.vibrate && !(vibrateOnChange && currentCount === 0)) {
           navigator.vibrate(50);
         }
         if (isVisible && soundOnCount && !(soundOnChange && currentCount === 0)) {
-          doBeep(5, 880, 50);
+          doBeep(0.75, 220, 0.6);
         }
         setCurrentCount(currentCount + 1);
       }
@@ -86,7 +92,7 @@ const AppMain = () => {
         navigator.vibrate(200);
       }
       if (isVisible && soundOnChange) {
-        doBeep(40, 880, 50);
+        doBeep(1, 369.99, 0.6);
       }
       if (phaseIndex < currentPattern.phases.length - 1) {
         setPhaseIndex(phaseIndex + 1);
@@ -94,8 +100,6 @@ const AppMain = () => {
         setPhaseIndex(0);
       }
     }
-
-    setPhaseProgress(timeAccumulator/(currentPattern.phases[phaseIndex].units * secondsPerCount) * 100);
 
   }, tickTimeInSeconds * 1000);
 
