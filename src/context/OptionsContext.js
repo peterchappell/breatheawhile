@@ -15,65 +15,91 @@ type Dispatch = (action: Action) => void;
 const OptionsStateContext = React.createContext<State | typeof undefined>(undefined);
 const OptionsDispatchContext = React.createContext<Dispatch | typeof undefined>(undefined, );
 
+const STORAGE_KEY = 'breatheawhile_settings';
+
 const optionsReducer = (state, action: Action) => {
+  let newState;
   switch (action.type) {
     case actions.TOGGLE_SOUND_ON_COUNT: {
-      return {
+      newState = {
         ...state,
         soundOnCount: !state.soundOnCount,
-      }
+      };
+      break;
     }
     case actions.TOGGLE_SOUND_ON_CHANGE: {
-      return {
+      newState = {
         ...state,
         soundOnChange: !state.soundOnChange,
-      }
+      };
+      break;
     }
     case actions.TOGGLE_VIBRATE_ON_COUNT: {
-      return {
+      newState = {
         ...state,
         vibrateOnCount: !state.vibrateOnCount,
-      }
+      };
+      break;
     }
     case actions.TOGGLE_VIBRATE_ON_CHANGE: {
-      return {
+      newState = {
         ...state,
         vibrateOnChange: !state.vibrateOnChange,
-      }
+      };
+      break;
     }
     case actions.TOGGLE_SHOW_INSTRUCTIONS: {
-      return {
+      newState = {
         ...state,
         showInstructions: !state.showInstructions,
-      }
+      };
+      break;
     }
     case actions.SET_SECONDS_PER_COUNT: {
-      return {
+      newState = {
         ...state,
         secondsPerCount: action.payload,
-      }
+      };
+      break;
     }
     case actions.SET_PATTERN: {
-      return {
+      newState = {
         ...state,
         currentPattern: action.payload,
-      }
+      };
+      break;
     }
     case actions.SET_VISUALISATION: {
-      return {
+      newState = {
         ...state,
         currentVisualisation: action.payload,
-      }
+      };
+      break;
     }
     default: {
-      throw new Error(`Unhandled action type: ${action.type}`)
+      throw new Error(`Unhandled action type: ${action.type}`);
     }
   }
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(newState));
+  return newState;
 }
+
+const retrieveInitialState = () => {
+  const savedStateString = localStorage.getItem(STORAGE_KEY);
+  if (!savedStateString) {
+    return initialState;
+  }
+  try {
+    return JSON.parse(savedStateString);
+  } catch {
+    return initialState;
+  }
+};
 
 const OptionsProvider = (props: ({ children: ReactNode })) => {
   const { children } = props;
-  const [state, dispatch] = useReducer(optionsReducer, initialState)
+  const startingState = retrieveInitialState();
+  const [state, dispatch] = useReducer(optionsReducer, startingState)
   return (
     <OptionsStateContext.Provider value={state}>
       <OptionsDispatchContext.Provider value={dispatch}>
