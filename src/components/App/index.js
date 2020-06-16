@@ -9,6 +9,7 @@ import AppHeader from 'components/AppHeader';
 import AppMain from 'components/AppMain';
 import AppNav from 'components/AppNav';
 import AppOptions from 'components/AppOptions';
+import PrivacyManager from 'components/PrivacyManager';
 import ServiceWorkerManager from 'components/ServiceWorkerManager';
 import InfoPanel from "components/InfoPanel";
 
@@ -22,9 +23,27 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const cookieKey = 'breatheawhile';
+
+const setCookie = () => {
+  const cookieDate = new Date();
+  cookieDate.setFullYear(cookieDate.getFullYear() + 2);
+  document.cookie = `${cookieKey}=true; expires=${cookieDate.toUTCString()};`;
+}
+
+const checkCookie = () => {
+  let alreadyHasCookie = false;
+  if (document.cookie.split(';').some(item => item.trim().startsWith(`${cookieKey}=`))) {
+    alreadyHasCookie = true;
+    setCookie();
+  }
+  return alreadyHasCookie;
+}
+
 const App = () => {
   const [navValue, setNavValue] = useState();
   const [isInfoOpen, setIsInfoOpen] = useState(false);
+  const [hasCookie, setHasCookie] = useState(checkCookie());
   const history = useHistory();
   const location = useLocation();
   const popoverAnchorRef = useRef();
@@ -72,6 +91,11 @@ const App = () => {
     history.push(newNavValue);
   };
 
+  const acceptPrivacyPolicy = () => {
+    setCookie();
+    setHasCookie(true);
+  };
+
   useEffect(() => {
     const pathName = location.pathname.slice(1);
     if (pathName === 'info') {
@@ -106,7 +130,11 @@ const App = () => {
           isOpen={isInfoOpen}
           closeHandler={closeInfo}
         />
-        <ServiceWorkerManager />
+        { !hasCookie ? (
+          <PrivacyManager continueHandler={acceptPrivacyPolicy} />
+        ) : (
+          <ServiceWorkerManager />
+        )}
       </section>
     </ThemeProvider>
   );

@@ -97,6 +97,9 @@ const InfoPanel = (props: Props) => {
             <Typography variant="body1" component="p" gutterBottom>
               Select one of the patterns and adjust the speed to suit your depth of breath. The visualisations can help you keep your rhythm. You can also use the sound and vibrations to keep in time.
             </Typography>
+            <Typography variant="body1" component="p" gutterBottom>
+              <p className={classes.paragraph}>A <a href="/privacy.html" target="_blank">privacy policy</a> is provided (opens in a new tab).</p>
+            </Typography>
           </div>
         </DialogContentText>
       </DialogContent>
