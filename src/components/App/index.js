@@ -11,7 +11,8 @@ import AppNav from 'components/AppNav';
 import AppOptions from 'components/AppOptions';
 import PrivacyManager from 'components/PrivacyManager';
 import ServiceWorkerManager from 'components/ServiceWorkerManager';
-import InfoPanel from "components/InfoPanel";
+import InfoPanel from 'components/InfoPanel';
+import { sendPageView } from 'utils/googleAnalytics';
 
 const useStyles = makeStyles(() => ({
   appContainer: {
@@ -67,11 +68,13 @@ const App = () => {
 
   const openInfo = () => {
     history.push('info');
+    sendPageView('/info', 'info');
     setIsInfoOpen(true);
   };
 
   const closeInfo = () => {
     history.push('');
+    sendPageView();
     setIsInfoOpen(false);
   };
 
@@ -84,8 +87,10 @@ const App = () => {
     let newNavValue;
     if (newValue !== navValue) {
       newNavValue = newValue;
+      sendPageView(`/${newNavValue}`, newNavValue);
     } else {
       newNavValue = '';
+      sendPageView();
     }
     setNavValue(newNavValue);
     history.push(newNavValue);

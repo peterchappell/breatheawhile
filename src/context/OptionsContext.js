@@ -81,6 +81,10 @@ const optionsReducer = (state, action: Action) => {
     }
   }
   localStorage.setItem(STORAGE_KEY, JSON.stringify(newState));
+  window.gtag('event', 'settingschange', {
+    'event_category': 'setting',
+    'event_label': action.type,
+  });
   return newState;
 }
 
