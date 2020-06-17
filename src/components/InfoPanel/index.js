@@ -54,6 +54,10 @@ const InfoPanel = (props: Props) => {
 
   const handleInstall = () => {
     installPromptEvent.prompt();
+    window.gtag('event', 'installstart', {
+      'event_category': 'install',
+      'event_label': 'install',
+    });
     setIsInstallStarted(true);
   };
 
