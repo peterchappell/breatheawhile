@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 type Option = {
   name: string,
   description: string,
-  id: number,
+  id: number | string,
 };
 
 type Props = {

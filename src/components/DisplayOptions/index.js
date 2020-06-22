@@ -10,6 +10,8 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 import Hidden from "@material-ui/core/Hidden";
 
+import RadioButtonList from 'components/RadioButtonList';
+import visualisations from 'utils/visualisations';
 import actions from 'context/actions';
 import { useOptionsState, useOptionsDispatch } from 'context/OptionsContext';
 import useGlobalStyles from 'hooks/useGlobalStyles';
@@ -23,32 +25,19 @@ const DisplayOptions = () => {
     currentVisualisation,
   } = useOptionsState();
 
+  const handleVisualisationChange = (visualisation) => {
+    dispatchSettingsChange({ type: actions.SET_VISUALISATION, payload: visualisation.id });
+  };
+
   return (
     <Container maxWidth="md">
       <FormControl component="fieldset" className={globalClasses.formControl}>
         <FormLabel component="legend">Visualisation</FormLabel>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={currentVisualisation === 'simple'}
-                onChange={() => dispatchSettingsChange({ type: actions.SET_VISUALISATION, payload: 'simple' })}
-              />
-            }
-            label="Timer with icons"
-          />
-        </FormGroup>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={currentVisualisation === 'expandingParticles'}
-                onChange={() => dispatchSettingsChange({ type: actions.SET_VISUALISATION, payload: 'expandingParticles' })}
-              />
-            }
-            label="Dreamy bubbles"
-          />
-        </FormGroup>
+        <RadioButtonList
+          options={visualisations}
+          selectedId={currentVisualisation}
+          selectHandler={handleVisualisationChange}
+        />
       </FormControl>
       <Hidden smUp>
         <Divider />
