@@ -3,6 +3,7 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import FormLabel from "@material-ui/core/FormLabel";
 
 import RadioButtonList from "components/RadioButtonList";
 import actions from 'context/actions';
@@ -37,6 +38,7 @@ const PatternOptions = (props: Props) => {
   return (
     <Container maxWidth="md">
       <div className={classes.listContainer}>
+        <FormLabel>Select a Breathing Pattern</FormLabel>
         <RadioButtonList
           options={breathingPatterns}
           selectedId={currentPattern && currentPattern.id}

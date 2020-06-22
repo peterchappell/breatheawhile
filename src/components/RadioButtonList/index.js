@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 
+import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -8,6 +9,21 @@ import ListItemText from '@material-ui/core/ListItemText';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import Typography from '@material-ui/core/Typography';
+
+const useStyles = makeStyles(() => ({
+  itemButton: {
+    '&:hover': {
+      backgroundColor: 'inherit',
+    }
+  },
+  itemRoot: {
+    padding: [['3px', 0]],
+  },
+  itemIcon: {
+    minWidth: 0,
+    marginRight: '7px',
+  }
+}));
 
 type Option = {
   name: string,
@@ -28,12 +44,14 @@ const RadioButtonList = (props: Props) => {
     selectHandler,
   } = props;
 
+  const classes = useStyles();
+
   const handleSelectOption = (event, option) => {
     selectHandler(option);
   };
 
   return (
-    <List component="div">
+    <List component="div" disablePadding>
       {options.map((option) => {
         const isSelected = option.id === selectedId;
 
@@ -42,10 +60,11 @@ const RadioButtonList = (props: Props) => {
             key={`${option.id}_key`}
             alignItems="flex-start"
             button
-            selected={isSelected}
+            disableGutters
             onClick={event => handleSelectOption(event, option)}
+            classes={{ root: classes.itemRoot, button: classes.itemButton }}
           >
-            <ListItemIcon>
+            <ListItemIcon className={classes.itemIcon}>
               { isSelected ? (
                 <RadioButtonCheckedIcon title="Selected" aria-hidden={false} color="secondary" />
               ) : (
