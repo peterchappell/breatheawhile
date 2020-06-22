@@ -9,3 +9,5 @@ window.AudioContext = class AudioContext {
     this.isFake = true;
   }
 };
+
+window.gtag = jest.fn();
