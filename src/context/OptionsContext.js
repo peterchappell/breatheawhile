@@ -2,13 +2,14 @@
 import React, { useReducer } from 'react';
 import type { Node as ReactNode } from 'react';
 import actions, { actionsNotUsingPayloads } from './actions';
-import initialState from './initialState';
+import initialState, { visualisationsList } from './initialState';
 import type { State } from './initialState';
 
 type Action =
   | { type: $Keys<typeof actionsNotUsingPayloads> }
   | { type: "SET_PATTERN", payload: Object }
-  | { type: "SET_SECONDS_PER_COUNT", payload: number };
+  | { type: "SET_SECONDS_PER_COUNT", payload: number }
+  | { type: "SET_VISUALISATION", payload: $Keys<typeof visualisationsList> };
 
 type Dispatch = (action: Action) => void;
 

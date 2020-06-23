@@ -2,7 +2,6 @@ import React from 'react';
 import { render, cleanup, screen, fireEvent } from 'utils/test-utils';
 
 import breathingPatterns from 'utils/breathingPatterns';
-import { OptionsProvider } from "context/OptionsContext";
 import PatternOptions from './index';
 
 describe('PatternOptions', () => {
@@ -10,18 +9,14 @@ describe('PatternOptions', () => {
 
   it('renders', () => {
     const { asFragment } = render(
-      <OptionsProvider>
-        <PatternOptions />
-      </OptionsProvider>
+      <PatternOptions />
     );
     expect(asFragment).toMatchSnapshot();
   });
 
   it('renders the list of breathing patterns with the first one selected by default', () => {
     render(
-      <OptionsProvider>
-        <PatternOptions />
-      </OptionsProvider>
+      <PatternOptions />
     );
     const listItemButtonEls = screen.getAllByRole('button');
     expect(listItemButtonEls.length).toEqual(breathingPatterns.length);
@@ -32,9 +27,7 @@ describe('PatternOptions', () => {
   it('calls the onPatternSelected function prop when a selection is made', () => {
     const mockHandler = jest.fn();
     render(
-      <OptionsProvider>
-        <PatternOptions onPatternSelected={mockHandler} />
-      </OptionsProvider>
+      <PatternOptions onPatternSelected={mockHandler} />
     );
     fireEvent.click(screen.getByText(breathingPatterns[1].name));
 

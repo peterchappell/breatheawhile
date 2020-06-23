@@ -34,7 +34,7 @@ type Option = {
 type Props = {
   selectHandler: Function,
   options: Array<Option>,
-  selectedId: number,
+  selectedId: string,
 };
 
 const RadioButtonList = (props: Props) => {

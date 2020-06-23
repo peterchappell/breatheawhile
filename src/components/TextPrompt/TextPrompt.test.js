@@ -1,15 +1,12 @@
 import React from 'react';
 import { render } from 'utils/test-utils';
 
-import { OptionsProvider } from "context/OptionsContext";
 import TextPrompt from './index';
 
 describe('TextPrompt', () => {
   it('renders', () => {
     const { asFragment } = render(
-      <OptionsProvider>
-        <TextPrompt />
-      </OptionsProvider>
+      <TextPrompt />
     );
     expect(asFragment).toMatchSnapshot();
   });
@@ -22,14 +19,12 @@ describe('TextPrompt', () => {
       progress: 0,
     };
     const { getByText } = render(
-      <OptionsProvider>
-        <TextPrompt
-          currentInstruction={props.currentInstruction}
-          patternName={props.patternName}
-          count={props.count}
-          progress={props.progress}
-        />
-      </OptionsProvider>
+      <TextPrompt
+        currentInstruction={props.currentInstruction}
+        patternName={props.patternName}
+        count={props.count}
+        progress={props.progress}
+      />
     );
     expect(getByText(props.currentInstruction, { exact: false })).toBeTruthy();
     expect(getByText(props.patternName)).toBeTruthy();
@@ -44,9 +39,7 @@ describe('TextPrompt', () => {
       progress: 0,
     };
     const { getByText } = render(
-      <OptionsProvider>
-        <TextPrompt props={props} />
-      </OptionsProvider>
+      <TextPrompt props={props} />
     );
     expect(getByText('…')).toBeTruthy();
   });

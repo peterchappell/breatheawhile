@@ -1,38 +1,30 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { ThemeProvider } from '@material-ui/core/styles';
 
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { OptionsProvider } from 'context/OptionsContext';
+import theme from './muiTheme';
 
 type Props = {
   children: Object,
 };
 
-const Wrapper = (props: Props) => {
-  const { children } = props;
-  const theme = createMuiTheme({
-    palette: {
-      primary: {
-        main: '#01579b',
-      },
-      secondary: {
-        main: '#c1185b',
-      },
-      darkBackground: {
-        light: '#37474f',
-        main: '#263238',
-        dark: '#1d262b',
-      }
-    },
-  });
+// note: we could allow for specific options to be passed in here (e.g. initial state)
+const customRender = (ui, options) => {
+  const Wrapper = (props: Props) => {
+    const { children } = props;
 
-  return (
-    <ThemeProvider theme={theme}>
-      {children}
-    </ThemeProvider>
-  );
+    return (
+      <ThemeProvider theme={theme}>
+        <OptionsProvider>
+          {children}
+        </OptionsProvider>
+      </ThemeProvider>
+    );
+  };
+
+  return render(ui, { wrapper: Wrapper, ...options });
 };
-
-const customRender = (ui, options) => render(ui, { wrapper: Wrapper, ...options });
 
 // re-export everything
 export {

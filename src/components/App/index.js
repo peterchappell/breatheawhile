@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 import Container from '@material-ui/core/Container';
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { useHistory, useLocation } from 'react-router-dom';
 
+import theme from 'utils/muiTheme';
 import { OptionsProvider } from 'context/OptionsContext';
 import AppHeader from 'components/AppHeader';
 import AppMain from 'components/AppMain';
@@ -49,21 +50,6 @@ const App = () => {
   const location = useLocation();
   const popoverAnchorRef = useRef();
 
-  const theme = createMuiTheme({
-    palette: {
-      primary: {
-        main: '#0277bd',
-      },
-      secondary: {
-        main: '#c1185b',
-      },
-      darkBackground: {
-        light: '#37474f',
-        main: '#263238',
-        dark: '#1d262b',
-      }
-    },
-  });
   const classes = useStyles();
 
   const openInfo = () => {

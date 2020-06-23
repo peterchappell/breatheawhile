@@ -1,42 +1,33 @@
 import React from 'react';
 import { render, screen, fireEvent } from 'utils/test-utils';
 
-import { OptionsProvider } from "context/OptionsContext";
 import SoundOptions from './index';
 
 describe('SoundOptions', () => {
   it('renders', () => {
     const { asFragment } = render(
-      <OptionsProvider>
-        <SoundOptions />
-      </OptionsProvider>
+      <SoundOptions />
     );
     expect(asFragment).toMatchSnapshot();
   });
 
   it('renders all the sound options', () => {
     const { container } = render(
-      <OptionsProvider>
-        <SoundOptions />
-      </OptionsProvider>
+      <SoundOptions />
     );
     expect(container.querySelectorAll('input[type=checkbox]').length).toEqual(4);
   });
 
   it('renders the checkboxes as unchecked by default', () => {
     const { container } = render(
-      <OptionsProvider>
-        <SoundOptions />
-      </OptionsProvider>
+      <SoundOptions />
     );
     expect(container.querySelectorAll('input:checked').length).toEqual(0);
   });
 
   it('sets the checkboxes as checked (via context/state) when checkboxes are clicked', () => {
     render(
-      <OptionsProvider>
-        <SoundOptions />
-      </OptionsProvider>
+      <SoundOptions />
     );
     const toggleSoundOnCountCheckboxEl = screen.queryByTestId('toggleSoundOnCount').querySelector('input[type=checkbox]');
     const toggleSoundOnChangeCheckboxEl = screen.queryByTestId('toggleSoundOnChange').querySelector('input[type=checkbox]');
