@@ -9,6 +9,7 @@ import VisualisationExpandingParticles from "components/VisualisationExpandingPa
 import { visualisationsList } from 'context/initialState';
 import { useOptionsState } from 'context/OptionsContext';
 import useInterval from 'hooks/useInterval';
+import useBeeper from 'hooks/useBeeper';
 import { usePageVisibility } from 'hooks/visibility';
 
 const useStyles = makeStyles(() => ({
@@ -16,14 +17,6 @@ const useStyles = makeStyles(() => ({
     marginTop: '-20px',
   }
 }));
-
-const getAudioContext = () => {
-  // safari uses the webkit vendor prefix for audio context...
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  return new AudioContext();
-};
-
-const audioContext = getAudioContext();
 
 const AppMain = () => {
   const classes = useStyles();
@@ -46,24 +39,8 @@ const AppMain = () => {
   const tickDivider = useRef(0.02);
   const [tickTimeInSeconds, setTickTimeInSeconds] = useState(tickDivider.current * secondsPerCount);
   const isVisible = usePageVisibility();
-
-  const doBeep = (vol, freq, duration) => {
-    const fadeInDuration = duration/4;
-    const osc = audioContext.createOscillator();
-    const output = audioContext.createGain();
-
-    osc.connect(output);
-    osc.type = window.AudioContext ? 'sine' : 1; // safari is weird
-    osc.frequency.value = freq;
-
-    output.connect(audioContext.destination);
-    output.gain.setValueAtTime(0.01, audioContext.currentTime);
-
-    osc.start(audioContext.currentTime);
-    output.gain.exponentialRampToValueAtTime(vol, audioContext.currentTime + fadeInDuration);
-    output.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
-    osc.stop(audioContext.currentTime + duration + 0.1);
-  };
+  const doCountBeep = useBeeper();
+  const doChangeBeep = useBeeper(2);
 
   useEffect(() => {
     setTimeAccumulator(0);
@@ -92,7 +69,7 @@ const AppMain = () => {
           navigator.vibrate(50);
         }
         if (isVisible && soundOnCount && !(soundOnChange && currentCount === 0)) {
-          doBeep(0.75, 220, 0.6);
+          doCountBeep();
         }
         setCurrentCount(currentCount + 1);
       }
@@ -103,7 +80,7 @@ const AppMain = () => {
         navigator.vibrate(200);
       }
       if (isVisible && soundOnChange) {
-        doBeep(0.8, 369.99, 0.6);
+        doChangeBeep();
       }
       if (phaseIndex < currentPattern.phases.length - 1) {
         setPhaseIndex(phaseIndex + 1);
