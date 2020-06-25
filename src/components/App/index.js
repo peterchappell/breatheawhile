@@ -46,6 +46,8 @@ const App = () => {
   const [navValue, setNavValue] = useState();
   const [isInfoOpen, setIsInfoOpen] = useState(false);
   const [hasCookie, setHasCookie] = useState(checkCookie());
+  const [installPromptEvent, setInstallPromptEvent] = useState();
+  const [isInstallStarted, setIsInstallStarted] = useState(false);
   const history = useHistory();
   const location = useLocation();
   const popoverAnchorRef = useRef();
@@ -87,6 +89,15 @@ const App = () => {
     setHasCookie(true);
   };
 
+  const installHandler = () => {
+    installPromptEvent.prompt();
+    window.gtag('event', 'installstart', {
+      'event_category': 'install',
+      'event_label': 'install',
+    });
+    setIsInstallStarted(true);
+  };
+
   useEffect(() => {
     const pathName = location.pathname.slice(1);
     if (pathName === 'info') {
@@ -98,10 +109,18 @@ const App = () => {
     }
   }, [location.pathname]);
 
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    setInstallPromptEvent(event);
+  });
+
   return (
     <ThemeProvider theme={theme}>
       <section className={classes.appContainer}>
-        <AppHeader infoButtonHandler={openInfo} />
+        <AppHeader
+          infoButtonHandler={openInfo}
+          showInstallPrompt={!!installPromptEvent && !isInstallStarted}
+        />
         <Container maxWidth="md" component="main">
           <OptionsProvider>
             <AppMain />
@@ -120,6 +139,8 @@ const App = () => {
         <InfoPanel
           isOpen={isInfoOpen}
           closeHandler={closeInfo}
+          showInstallPrompt={!!installPromptEvent && !isInstallStarted}
+          onInstall={installHandler}
         />
         { !hasCookie ? (
           <PrivacyManager continueHandler={acceptPrivacyPolicy} />

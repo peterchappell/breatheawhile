@@ -1,5 +1,5 @@
 // @flow
-import React, { useState } from 'react';
+import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button";
@@ -16,6 +16,8 @@ import Typography from '@material-ui/core/Typography';
 type Props = {
   isOpen: boolean,
   closeHandler: Function,
+  showInstallPrompt: boolean,
+  onInstall: Function,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -47,24 +49,10 @@ const InfoPanel = (props: Props) => {
   const {
     isOpen,
     closeHandler,
+    showInstallPrompt,
+    onInstall,
   } = props;
   const classes = useStyles();
-  const [installPromptEvent, setInstallPromptEvent] = useState();
-  const [isInstallStarted, setIsInstallStarted] = useState(false);
-
-  const handleInstall = () => {
-    installPromptEvent.prompt();
-    window.gtag('event', 'installstart', {
-      'event_category': 'install',
-      'event_label': 'install',
-    });
-    setIsInstallStarted(true);
-  };
-
-  window.addEventListener('beforeinstallprompt', (event) => {
-    event.preventDefault();
-    setInstallPromptEvent(event);
-  });
 
   return (
     <Dialog
@@ -83,13 +71,13 @@ const InfoPanel = (props: Props) => {
       <DialogContent dividers>
         <DialogContentText component="div">
           <div className={classes.dialogContent}>
-            { (installPromptEvent && !isInstallStarted) && (
+            { showInstallPrompt && (
               <div className={classes.installContainer}>
                 <Typography variant="subtitle2" component="p" className={classes.installContainerCell}>
                   Access Breatheawhile more easily with our FREE&nbsp;APP!
                 </Typography>
                 <div className={classes.installContainerCell}>
-                  <Button variant="contained" color="primary" size="small" onClick={handleInstall}>
+                  <Button variant="contained" color="primary" size="small" onClick={onInstall}>
                     Install
                   </Button>
                 </div>
