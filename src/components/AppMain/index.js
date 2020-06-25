@@ -11,7 +11,8 @@ import { useOptionsState } from 'context/OptionsContext';
 import useInterval from 'hooks/useInterval';
 import { usePageVisibility } from 'hooks/visibility';
 
-const audioContext = new window.AudioContext();
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioContext = new AudioContext();
 
 const useStyles = makeStyles(() => ({
   mainContainer: {
