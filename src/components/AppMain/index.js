@@ -11,14 +11,19 @@ import { useOptionsState } from 'context/OptionsContext';
 import useInterval from 'hooks/useInterval';
 import { usePageVisibility } from 'hooks/visibility';
 
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioContext = new AudioContext();
-
 const useStyles = makeStyles(() => ({
   mainContainer: {
     marginTop: '-20px',
   }
 }));
+
+const getAudioContext = () => {
+  // safari uses the webkit vendor prefix for audio context...
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  return new AudioContext();
+};
+
+const audioContext = getAudioContext();
 
 const AppMain = () => {
   const classes = useStyles();
@@ -44,18 +49,20 @@ const AppMain = () => {
 
   const doBeep = (vol, freq, duration) => {
     const fadeInDuration = duration/4;
-    const v = audioContext.createOscillator();
-    const u = audioContext.createGain();
-    v.connect(u);
-    v.frequency.value = freq;
-    v.type = 'sine';
-    u.gain.setValueAtTime(0, audioContext.currentTime);
-    v.connect(u);
-    u.connect(audioContext.destination);
-    v.start(audioContext.currentTime);
-    u.gain.exponentialRampToValueAtTime(vol, audioContext.currentTime + fadeInDuration);
-    u.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
-    v.stop(audioContext.currentTime + duration + 0.1);
+    const osc = audioContext.createOscillator();
+    const output = audioContext.createGain();
+
+    osc.connect(output);
+    osc.type = window.AudioContext ? 'sine' : 1; // safari is weird
+    osc.frequency.value = freq;
+
+    output.connect(audioContext.destination);
+    output.gain.setValueAtTime(0.01, audioContext.currentTime);
+
+    osc.start(audioContext.currentTime);
+    output.gain.exponentialRampToValueAtTime(vol, audioContext.currentTime + fadeInDuration);
+    output.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+    osc.stop(audioContext.currentTime + duration + 0.1);
   };
 
   useEffect(() => {
@@ -78,7 +85,7 @@ const AppMain = () => {
 
     setPhaseProgress(timeAccumulator/(currentPattern.phases[phaseIndex].units * secondsPerCount) * 100);
 
-    if (timeAccumulator <= totalPhaseTime) {
+    if (timeAccumulator <= totalPhaseTime && currentCount < currentPattern.phases[phaseIndex].units + 1) {
       setTimeAccumulator(() => timeAccumulator + tickTimeInSeconds);
       if (timeAccumulator >= currentCount * totalPhaseTime/currentPattern.phases[phaseIndex].units) {
         if (isVisible && vibrateOnCount && navigator.vibrate && !(vibrateOnChange && currentCount === 0)) {
@@ -96,7 +103,7 @@ const AppMain = () => {
         navigator.vibrate(200);
       }
       if (isVisible && soundOnChange) {
-        doBeep(1, 369.99, 0.6);
+        doBeep(0.8, 369.99, 0.6);
       }
       if (phaseIndex < currentPattern.phases.length - 1) {
         setPhaseIndex(phaseIndex + 1);
