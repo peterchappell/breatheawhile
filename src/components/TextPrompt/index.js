@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(() => ({
   container: {
+    height: '60px',
     marginTop: '20px',
     textAlign: 'center',
   },
