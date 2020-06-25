@@ -58,7 +58,7 @@ const AppMain = () => {
     if (soundOnChange || soundOnCount) {
       dummyBeep();
     }
-  }, [soundOnChange, soundOnCount]);
+  }, [soundOnChange, soundOnCount, dummyBeep]);
 
   useInterval(() => {
     if (!currentPattern.phases[phaseIndex]) {
