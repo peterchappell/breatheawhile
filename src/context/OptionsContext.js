@@ -95,7 +95,14 @@ const retrieveInitialState = () => {
     return initialState;
   }
   try {
-    return JSON.parse(savedStateString);
+    const savedState = JSON.parse(savedStateString);
+    // never turn on the sound by default even if it was a saved setting
+    // (because of potential around auto-play restrictions in browser)
+    return {
+      ...savedState,
+      soundOnCount: false,
+      soundOnChange: false,
+    }
   } catch {
     return initialState;
   }
