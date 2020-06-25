@@ -41,6 +41,7 @@ const AppMain = () => {
   const isVisible = usePageVisibility();
   const doCountBeep = useBeeper();
   const doChangeBeep = useBeeper(2);
+  const dummyBeep = useBeeper(1, 0);
 
   useEffect(() => {
     setTimeAccumulator(0);
@@ -52,6 +53,12 @@ const AppMain = () => {
   useEffect(() => {
     setTickTimeInSeconds(tickDivider.current * secondsPerCount);
   }, [secondsPerCount]);
+
+  useEffect(() => {
+    if (soundOnChange || soundOnCount) {
+      dummyBeep();
+    }
+  }, [soundOnChange, soundOnCount]);
 
   useInterval(() => {
     if (!currentPattern.phases[phaseIndex]) {

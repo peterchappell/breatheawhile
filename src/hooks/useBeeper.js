@@ -4,11 +4,16 @@
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioContext = new AudioContext();
 
-const beepDuration = 0.6;
-const fadeInDuration = beepDuration/4;
-
 export default function useBeeper(type = 1, vol = 0.75) {
   return () => {
+    let beepDuration = 0.6;
+    let startVol = 0.01;
+    if (vol <= 0) {
+      beepDuration = 0;
+      startVol = 0;
+    }
+    const fadeInDuration = beepDuration/4;
+
     const osc = audioContext.createOscillator();
     const output = audioContext.createGain();
 
@@ -19,11 +24,13 @@ export default function useBeeper(type = 1, vol = 0.75) {
     osc.frequency.value = freq;
 
     output.connect(audioContext.destination);
-    output.gain.setValueAtTime(0.01, audioContext.currentTime);
+    output.gain.setValueAtTime(startVol, audioContext.currentTime);
 
     osc.start(audioContext.currentTime);
-    output.gain.exponentialRampToValueAtTime(vol, audioContext.currentTime + fadeInDuration);
-    output.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + beepDuration);
+    if (vol > 0) {
+      output.gain.exponentialRampToValueAtTime(vol, audioContext.currentTime + fadeInDuration);
+      output.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + beepDuration);
+    }
     osc.stop(audioContext.currentTime + beepDuration + 0.1);
   }
 };
